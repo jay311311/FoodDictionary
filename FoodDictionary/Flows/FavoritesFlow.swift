@@ -40,7 +40,6 @@ class FavoritesFlow: Flow {
 
     }
     
-    
     private func navigateToFoodDetailScreen() -> FlowContributors {
         return .none
     }
@@ -48,16 +47,15 @@ class FavoritesFlow: Flow {
     private func navigateToFavoritesScreen() -> FlowContributors {
         let viewController = FavoritesViewController()
         let stepper = FavoritesStepper()
-               viewController.title = "Favorite"
-               self.rootViewController.pushViewController(viewController, animated: true)
-               return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: stepper))
+        viewController.title = "Favorite"
+        self.rootViewController.pushViewController(viewController, animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: stepper))
     }
 
 }
 
 
 class FavoritesStepper: Stepper {
-
     let steps = PublishRelay<Step>()
 
     @objc func favoritesRequire() {

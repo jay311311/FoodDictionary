@@ -9,6 +9,7 @@ target 'FoodDictionary' do
     pod 'RxFlow'
     pod 'RxSwift', '6.6.0'
     pod 'RxCocoa', '6.6.0'
+    pod 'Moya', '~> 15.0'
 
 
   target 'FoodDictionaryTests' do

@@ -42,6 +42,7 @@ class FoodListFlow: Flow {
     private func navigateToFoodListScreen() -> FlowContributors {
         let viewController = FoodListViewController()
         let stepper = FoodListStepper()
+        service.getFoodListByMoya()
         viewController.title = "FoodList"
         self.rootViewController.pushViewController(viewController, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: stepper))

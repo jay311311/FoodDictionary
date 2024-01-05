@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		198F813BF5BA37DE6482FD6E /* Pods_FoodDictionaryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 562D2C5D2DE9839D027F4B12 /* Pods_FoodDictionaryTests.framework */; };
 		1D1856526B7E12F61686F745 /* Pods_FoodDictionary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66EC882BAA28004AA279E0B9 /* Pods_FoodDictionary.framework */; };
+		6709E7C82B47D91300706A1F /* FoodMoya.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6709E7C72B47D91300706A1F /* FoodMoya.swift */; };
+		6709E7CA2B47D98300706A1F /* FoodModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6709E7C92B47D98300706A1F /* FoodModel.swift */; };
 		67E4FC412B479B630031E299 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E4FC402B479B630031E299 /* AppDelegate.swift */; };
 		67E4FC452B479B630031E299 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E4FC442B479B630031E299 /* ViewController.swift */; };
 		67E4FC4B2B479B630031E299 /* FoodDictionary.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 67E4FC492B479B630031E299 /* FoodDictionary.xcdatamodeld */; };
@@ -50,6 +52,8 @@
 		562D2C5D2DE9839D027F4B12 /* Pods_FoodDictionaryTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FoodDictionaryTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		642D8AB424A40C8A33CD6D3E /* Pods-FoodDictionary-FoodDictionaryUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FoodDictionary-FoodDictionaryUITests.release.xcconfig"; path = "Target Support Files/Pods-FoodDictionary-FoodDictionaryUITests/Pods-FoodDictionary-FoodDictionaryUITests.release.xcconfig"; sourceTree = "<group>"; };
 		66EC882BAA28004AA279E0B9 /* Pods_FoodDictionary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FoodDictionary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6709E7C72B47D91300706A1F /* FoodMoya.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodMoya.swift; sourceTree = "<group>"; };
+		6709E7C92B47D98300706A1F /* FoodModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodModel.swift; sourceTree = "<group>"; };
 		67E4FC3D2B479B630031E299 /* FoodDictionary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodDictionary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67E4FC402B479B630031E299 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		67E4FC442B479B630031E299 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -189,6 +193,7 @@
 		67E4FC732B479C8A0031E299 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				6709E7C92B47D98300706A1F /* FoodModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -197,6 +202,7 @@
 			isa = PBXGroup;
 			children = (
 				67E4FC832B47A78E0031E299 /* FoodService.swift */,
+				6709E7C72B47D91300706A1F /* FoodMoya.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -481,8 +487,10 @@
 				67E4FC452B479B630031E299 /* ViewController.swift in Sources */,
 				67E4FC822B47A5520031E299 /* FoodDetailViewController.swift in Sources */,
 				67E4FC862B47AB690031E299 /* FoodListFlow.swift in Sources */,
+				6709E7C82B47D91300706A1F /* FoodMoya.swift in Sources */,
 				67E4FC4B2B479B630031E299 /* FoodDictionary.xcdatamodeld in Sources */,
 				67E4FC412B479B630031E299 /* AppDelegate.swift in Sources */,
+				6709E7CA2B47D98300706A1F /* FoodModel.swift in Sources */,
 				67E4FC882B47AB740031E299 /* FavoritesFlow.swift in Sources */,
 				67E4FC782B479FDC0031E299 /* FavoritesViewController.swift in Sources */,
 			);
