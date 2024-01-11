@@ -20,6 +20,21 @@ class FoodListViewModel: Stepper {
     }
     var foodList = BehaviorRelay<[Food]>(value: [])
     
+    struct Input {
+        let trigger: PublishRelay<Void>
+    }
+    struct Output {
+        let foodList: BehaviorRelay<[Food]>
+    }
+
+    func transform(req: Input) -> Output {
+        req.trigger
+            .bind(onNext: { [weak self] _ in
+                self?.getData()
+            }).disposed(by: disposeBag)
+
+        return Output(foodList: foodList)
+    }
     
     func getData()  {
         FoodService.shared

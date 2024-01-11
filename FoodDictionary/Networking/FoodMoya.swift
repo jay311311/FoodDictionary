@@ -17,7 +17,7 @@ extension FoodMoaya: TargetType {
 //    let apiKey = "b2d5bbd6c8384296b0bd"
     // 1
     public var baseURL: URL {
-      return URL(string: "http://openapi.foodsafetykorea.go.kr/api/b2d5bbd6c8384296b0bd/COOKRCP01/json/0/10/")!
+      return URL(string: "http://openapi.foodsafetykorea.go.kr/api/b2d5bbd6c8384296b0bd/COOKRCP01/json/0/100/")!
     }
 
     // 2

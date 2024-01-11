@@ -23,7 +23,6 @@ class FoodService {
                 case let .success(response):
                     do{
                         guard let data = try? response.map(FoodModel.self) else { return }
-                        print("여기여기 \(result)")
                         observer(.success(data.COOKRCP01.row))
                     } catch {
                         observer(.failure(error))
