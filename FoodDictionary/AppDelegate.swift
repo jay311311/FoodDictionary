@@ -17,7 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let disposeBag = DisposeBag()
     var window: UIWindow?
     var coordinator = FlowCoordinator()
-    let appService = FoodService()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -29,8 +28,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print ("did navigate to flow=\(flow) and step=\(step)")
         }).disposed(by: self.disposeBag)
 
-        let appFlow = AppFlow(withService: appService)
-        self.coordinator.coordinate(flow: appFlow, with: AppStepper(withService: self.appService))
+        let appFlow = AppFlow()
+        self.coordinator.coordinate(flow: appFlow, with: AppStepper())
 
         Flows.use(appFlow, when: .created) { [weak self]root in
             self?.window?.rootViewController = root

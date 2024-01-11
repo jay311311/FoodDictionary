@@ -13,52 +13,39 @@ import RxSwift
 
 class FavoritesFlow: Flow {
     var root: Presentable {
-            return self.rootViewController
-        }
+        return self.rootViewController
+    }
     
-    private let rootViewController = UINavigationController()
-    private let service: FoodService
-    private let favoritesStepper: FavoritesStepper
-
-
-    init(service: FoodService, favoritesStepper: FavoritesStepper) {
-        self.service = service
-        self.favoritesStepper = favoritesStepper
+    let rootViewController = UINavigationController()
+    private let favoritesViewModel: FavoritesViewModel
+    
+    
+    init(favoritesViewModel: FavoritesViewModel) {
+        self.favoritesViewModel = favoritesViewModel
     }
     
     func navigate(to step: Step) -> FlowContributors {
-        guard let step = step as? Steps else { return .none }
+        guard let step = step as? FavoritesSteps else { return .none }
         
         switch step {
-        case .favorites:
+        case .initialStep:
             return navigateToFavoritesScreen()
         case .foodDetail:
             return navigateToFoodDetailScreen()
         default:
             return .none
         }
-
+        
     }
     
     private func navigateToFoodDetailScreen() -> FlowContributors {
         return .none
     }
-
+    
     private func navigateToFavoritesScreen() -> FlowContributors {
         let viewController = FavoritesViewController()
-        let stepper = FavoritesStepper()
-        viewController.title = "Favorite"
+        viewController.viewModel = self.favoritesViewModel
         self.rootViewController.pushViewController(viewController, animated: true)
-        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: stepper))
-    }
-
-}
-
-
-class FavoritesStepper: Stepper {
-    let steps = PublishRelay<Step>()
-
-    @objc func favoritesRequire() {
-        self.steps.accept(Steps.favorites)
+        return .none
     }
 }

@@ -8,9 +8,22 @@
 import Foundation
 import RxFlow
 
-enum Steps: Step {
+enum MainSteps: Step {
+    case initialStep
     case foodList
     case favorites
     
     case foodDetail
+}
+
+enum FoodListSteps: Step {
+    case initialStep
+    case foodDetail
+    case back
+}
+
+enum FavoritesSteps: Step {
+    case initialStep
+    case foodDetail
+    case back
 }

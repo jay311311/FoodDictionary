@@ -9,10 +9,12 @@ import UIKit
 
 class FoodListViewController: UIViewController {
 
+    var viewModel: FoodListViewModel!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .purple
-
+        viewModel.getData()
     }
     
 

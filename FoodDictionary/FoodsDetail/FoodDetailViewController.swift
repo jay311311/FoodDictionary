@@ -8,6 +8,8 @@
 import UIKit
 
 class FoodDetailViewController: UIViewController {
+    
+    var viewModel: FoodDetailViewModel!
 
     override func viewDidLoad() {
         super.viewDidLoad()

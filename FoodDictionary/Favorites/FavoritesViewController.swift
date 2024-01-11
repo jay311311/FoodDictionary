@@ -9,14 +9,14 @@ import UIKit
 
 class FavoritesViewController: UIViewController {
 
+    var viewModel: FavoritesViewModel!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .yellow
     }
     
-
     deinit {
         print("FavoritesViewController yellow deinit")
     }
-    
 }
