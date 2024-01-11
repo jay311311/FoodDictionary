@@ -10,7 +10,7 @@ target 'FoodDictionary' do
     pod 'RxSwift', '6.6.0'
     pod 'RxCocoa', '6.6.0'
     pod 'Moya', '~> 15.0'
-
+    pod 'SnapKit', '~> 5.0.0'
 
   target 'FoodDictionaryTests' do
     inherit! :search_paths
