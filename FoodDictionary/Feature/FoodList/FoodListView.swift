@@ -10,7 +10,7 @@ import RxRelay
 import RxSwift
 
 class FoodListView: UIView {
-    var disposeBag = DisposeBag()
+    let disposeBag = DisposeBag()
     let dataRelay = BehaviorRelay<[Food]>(value: [])
     
     lazy var tableView: UITableView = {
@@ -22,7 +22,8 @@ class FoodListView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+        backgroundColor = .white
+
         setupLayout()
         setupTableView()
     }
@@ -37,10 +38,7 @@ class FoodListView: UIView {
     }
 
     func setupLayout() {
-        backgroundColor = .white
-        
         addSubview(tableView)
-        
         tableView.snp.makeConstraints { $0.edges.equalToSuperview() }
     }
     

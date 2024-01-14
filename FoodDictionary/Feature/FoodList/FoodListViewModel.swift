@@ -18,13 +18,16 @@ class FoodListViewModel: Stepper {
     var initialStep: Step {
         return FoodListSteps.initialStep
     }
+    
     var foodList = BehaviorRelay<[Food]>(value: [])
+    var isLoading = BehaviorRelay<Bool>(value: true)
     
     struct Input {
         let trigger: PublishRelay<Void>
     }
     struct Output {
         let foodList: BehaviorRelay<[Food]>
+        let isLoading: BehaviorRelay<Bool>
     }
 
     func transform(req: Input) -> Output {
@@ -33,15 +36,18 @@ class FoodListViewModel: Stepper {
                 self?.getData()
             }).disposed(by: disposeBag)
 
-        return Output(foodList: foodList)
+        return Output(
+            foodList: foodList,
+            isLoading: isLoading
+        )
     }
     
-    func getData()  {
+    func getData() {
         FoodService.shared
             .getFoodListByMoya()
             .subscribe(onSuccess: { data in
-                print("연동 \(data)")
                 self.foodList.accept(data)
+                self.isLoading.accept(false)
             }).disposed(by: disposeBag)
     }
 }

@@ -21,13 +21,8 @@ class FoodService {
             let task = moyaProvider.request(.food) { (result) in
                 switch result {
                 case let .success(response):
-                    do{
-                        guard let data = try? response.map(FoodModel.self) else { return }
-                        observer(.success(data.COOKRCP01.row))
-                    } catch {
-                        observer(.failure(error))
-                    }
-                    
+                    guard let data = try? response.map(FoodModel.self) else { return }
+                    observer(.success(data.COOKRCP01.row))
                 case let .failure(error):
                     print(error.localizedDescription)
                     observer(.failure(error))
