@@ -31,14 +31,13 @@ class FavoritesFlow: Flow {
         case .initialStep:
             return navigateToFavoritesScreen()
         case .foodDetail:
-            return navigateToFoodDetailScreen()
+            return navigateToFoodDetail()
         default:
             return .none
         }
-        
     }
     
-    private func navigateToFoodDetailScreen() -> FlowContributors {
+    private func navigateToFoodDetail() -> FlowContributors {
         return .none
     }
     
@@ -46,6 +45,6 @@ class FavoritesFlow: Flow {
         let viewController = FavoritesViewController()
         viewController.viewModel = self.favoritesViewModel
         self.rootViewController.pushViewController(viewController, animated: true)
-        return .none
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewController.viewModel))
     }
 }

@@ -11,17 +11,18 @@ import RxCocoa
 import SnapKit
 
 class FoodListViewController: UIViewController {
-
+    
     var viewModel: FoodListViewModel!
     let requestTregger = PublishRelay<Void>()
+    let actionTrigger = PublishRelay<FoodListActionType>()
     
-    lazy var foodList = FoodListView()
+    lazy var foodListView = FoodListView()
     lazy var loadingView: LoadingView = {
         let loadingView = LoadingView()
         loadingView.translatesAutoresizingMaskIntoConstraints = false
         return loadingView
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .purple
@@ -30,15 +31,14 @@ class FoodListViewController: UIViewController {
         requestTregger.accept(())
     }
     
-
     deinit {
         print("FoodListViewController purple deinit")
     }
     
     func setLayout() {
-        view.addSubview(foodList)
+        view.addSubview(foodListView)
         view.addSubview(loadingView)
-        foodList.snp.makeConstraints {
+        foodListView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
         loadingView.snp.makeConstraints {
@@ -47,11 +47,12 @@ class FoodListViewController: UIViewController {
     }
     
     func bindViewModel() {
-        let input = FoodListViewModel.Input(trigger: requestTregger)
+        let input = FoodListViewModel.Input(trigger: requestTregger, actionTrigger: actionTrigger.asObservable())
         let output = viewModel.transform(req: input)
-
-        foodList.setupDI(relay: output.foodList)
+        
+        foodListView.setupDI(relay: output.foodList)
+        foodListView.setupDI(relay: actionTrigger)
+        
         loadingView.setupDI(relay: output.isLoading)
     }
-
 }

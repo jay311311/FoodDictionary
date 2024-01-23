@@ -36,7 +36,7 @@ class AppFlow: Flow {
         let foodListFlow = FoodListFlow(foodListViewModel: foodListViewModel)
         let favoritesFlow = FavoritesFlow(favoritesViewModel: favoritesViewModel)
         
-        Flows.use(foodListFlow, favoritesFlow, when: .created) { [unowned self] (root1: UINavigationController, root2: UINavigationController) in
+        Flows.use(foodListFlow, favoritesFlow, when: .created) { [weak self] (root1: UINavigationController, root2: UINavigationController) in
             let tabBarItem1 = UITabBarItem(title: "FoodList", image: UIImage(systemName: "fork.knife.circle"), selectedImage: nil)
             let tabBarItem2 = UITabBarItem(title: "Favorites", image: UIImage(systemName: "heart.circle"), selectedImage: nil)
             root1.tabBarItem = tabBarItem1
@@ -44,11 +44,11 @@ class AppFlow: Flow {
             root2.tabBarItem = tabBarItem2
             root2.title = "Favorites"
             
-            self.rootViewController.setViewControllers([root1, root2], animated: false)
+            self?.rootViewController.setViewControllers([root1, root2], animated: false)
         }
         return .multiple(flowContributors: [
-            .contribute(withNextPresentable: foodListFlow, withNextStepper: foodListViewModel),
-            .contribute(withNextPresentable: favoritesFlow, withNextStepper: favoritesViewModel)
+            .contribute(withNextPresentable: foodListFlow, withNextStepper: OneStepper(withSingleStep: FoodListSteps.initialStep)),
+            .contribute(withNextPresentable: favoritesFlow, withNextStepper: OneStepper(withSingleStep: FavoritesSteps.initialStep))
         ])
     }
 }

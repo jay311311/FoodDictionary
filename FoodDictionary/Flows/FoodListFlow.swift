@@ -30,7 +30,7 @@ class FoodListFlow: Flow {
         case .initialStep:
             return navigateToFoodListScreen()
         case .foodDetail:
-            return navigateToFoodDetailScreen()
+            return navigateToFoodDetail()
         default:
             return .none
         }
@@ -40,10 +40,14 @@ class FoodListFlow: Flow {
         let viewController = FoodListViewController()
         viewController.viewModel = self.foodListViewModel
         rootViewController.pushViewController(viewController, animated: true)
-        return .none
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewController.viewModel, allowStepWhenDismissed: true))
     }
     
-    private func navigateToFoodDetailScreen() -> FlowContributors {
+    private func navigateToFoodDetail() -> FlowContributors {
+        let viewController =  FoodDetailViewController()
+        viewController.viewModel = FoodDetailViewModel()
+        viewController.hidesBottomBarWhenPushed = true
+        self.rootViewController.pushViewController(viewController, animated: true)
         return .none
     }
 }

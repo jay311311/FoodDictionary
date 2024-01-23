@@ -10,7 +10,7 @@ import Kingfisher
 
 class FoodListCell: UICollectionViewCell {
     static let id = "FoodListCell"
-
+    
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 2
@@ -22,10 +22,10 @@ class FoodListCell: UICollectionViewCell {
     lazy var darkGradationView : CAGradientLayer = {
         let layer  = CAGradientLayer()
         let colors: [CGColor] = [
-           .init(red: 0, green: 0, blue: 0, alpha: 0),
-           .init(red: 0, green: 0, blue: 0, alpha: 0),
-           .init(red: 0, green: 0, blue: 0, alpha: 0.5),
-           .init(red: 0, green: 0, blue: 0, alpha: 1)
+            .init(red: 0, green: 0, blue: 0, alpha: 0),
+            .init(red: 0, green: 0, blue: 0, alpha: 0),
+            .init(red: 0, green: 0, blue: 0, alpha: 0.5),
+            .init(red: 0, green: 0, blue: 0, alpha: 1)
         ]
         layer.colors = colors
         layer.frame = contentView.bounds
@@ -47,7 +47,6 @@ class FoodListCell: UICollectionViewCell {
         contentView.addSubview(backgroundImage)
         backgroundImage.layer.addSublayer(darkGradationView)
         contentView.addSubview(titleLabel)
-
         
         backgroundImage.snp.makeConstraints {
             $0.edges.equalToSuperview()

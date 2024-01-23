@@ -12,8 +12,4 @@ import RxFlow
 
 class FavoritesViewModel: Stepper {
     let steps = PublishRelay<Step>()
-
-    var initialStep: Step {
-        return FavoritesSteps.initialStep
-    }
 }

@@ -12,14 +12,15 @@ import RxSwift
 class FoodListView: UIView {
     let disposeBag = DisposeBag()
     let dataRelay = BehaviorRelay<[Food]>(value: [])
+    let actionRelay = PublishRelay<FoodListActionType>()
     
     lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         let width = (UIScreen.main.bounds.size.width / 2) - 20
-
+        
         flowLayout.itemSize = CGSize(width: width, height: 200)
         flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-
+        
         let collection = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         collection.register(FoodListCell.self, forCellWithReuseIdentifier: FoodListCell.id)
         return collection
@@ -28,7 +29,7 @@ class FoodListView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
-
+        
         setupLayout()
         setupTableView()
     }
@@ -41,7 +42,11 @@ class FoodListView: UIView {
     func setupDI(relay: BehaviorRelay<[Food]>) {
         relay.bind(to: self.dataRelay).disposed(by: disposeBag)
     }
-
+    
+    func setupDI(relay: PublishRelay<FoodListActionType>) {
+        actionRelay.bind(to: relay).disposed(by: disposeBag)
+    }
+    
     func setupLayout() {
         addSubview(collectionView)
         collectionView.snp.makeConstraints { $0.edges.equalToSuperview() }
@@ -51,6 +56,12 @@ class FoodListView: UIView {
         dataRelay.bind(to:collectionView.rx.items(cellIdentifier:"FoodListCell", cellType: FoodListCell.self)) { index, data, cell in
             cell.configure(data: data)
         }.disposed(by: disposeBag)
+        
+        collectionView.rx.modelSelected(Food.self)
+            .subscribe(onNext: { [weak self] observe in
+                self?.actionRelay.accept(.tapFoodList)
+            })
+            .disposed(by: disposeBag)
     }
     
 }

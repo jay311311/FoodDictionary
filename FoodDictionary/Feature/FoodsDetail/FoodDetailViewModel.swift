@@ -6,7 +6,11 @@
 //
 
 import Foundation
+import RxSwift
+import RxCocoa
+import RxFlow
 
-class FoodDetailViewModel {
-    
+class FoodDetailViewModel: Stepper {
+    let steps = PublishRelay<Step>()
+
 }
