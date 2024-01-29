@@ -17,6 +17,9 @@
 		672E39732B4FE8C800C6E085 /* FoodListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 672E39722B4FE8C800C6E085 /* FoodListView.swift */; };
 		672E39752B4FEBA800C6E085 /* FoodListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 672E39742B4FEBA800C6E085 /* FoodListCell.swift */; };
 		672E39782B5398F500C6E085 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 672E39772B5398F500C6E085 /* LoadingView.swift */; };
+		672E39862B67175E00C6E085 /* FoodDetailBGView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 672E39852B67175E00C6E085 /* FoodDetailBGView.swift */; };
+		672E398A2B677B9700C6E085 /* FoodDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 672E39892B677B9700C6E085 /* FoodDetailView.swift */; };
+		672E398D2B677E5200C6E085 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 672E398C2B677E5200C6E085 /* UIView+.swift */; };
 		67E4FC412B479B630031E299 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E4FC402B479B630031E299 /* AppDelegate.swift */; };
 		67E4FC452B479B630031E299 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E4FC442B479B630031E299 /* ViewController.swift */; };
 		67E4FC4B2B479B630031E299 /* FoodDictionary.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 67E4FC492B479B630031E299 /* FoodDictionary.xcdatamodeld */; };
@@ -66,6 +69,9 @@
 		672E39722B4FE8C800C6E085 /* FoodListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListView.swift; sourceTree = "<group>"; };
 		672E39742B4FEBA800C6E085 /* FoodListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListCell.swift; sourceTree = "<group>"; };
 		672E39772B5398F500C6E085 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		672E39852B67175E00C6E085 /* FoodDetailBGView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDetailBGView.swift; sourceTree = "<group>"; };
+		672E39892B677B9700C6E085 /* FoodDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDetailView.swift; sourceTree = "<group>"; };
+		672E398C2B677E5200C6E085 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		67E4FC3D2B479B630031E299 /* FoodDictionary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodDictionary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67E4FC402B479B630031E299 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		67E4FC442B479B630031E299 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -163,6 +169,14 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
+		672E398B2B677E3600C6E085 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				672E398C2B677E5200C6E085 /* UIView+.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		67E4FC342B479B630031E299 = {
 			isa = PBXGroup;
 			children = (
@@ -191,6 +205,7 @@
 				672E39762B5398C000C6E085 /* Feature */,
 				67E4FC7B2B47A1630031E299 /* Flows */,
 				67E4FC742B479C930031E299 /* Networking */,
+				672E398B2B677E3600C6E085 /* Extension */,
 				67E4FC732B479C8A0031E299 /* Model */,
 				67E4FC402B479B630031E299 /* AppDelegate.swift */,
 				67E4FC442B479B630031E299 /* ViewController.swift */,
@@ -271,6 +286,8 @@
 			isa = PBXGroup;
 			children = (
 				67E4FC812B47A5520031E299 /* FoodDetailViewController.swift */,
+				672E39892B677B9700C6E085 /* FoodDetailView.swift */,
+				672E39852B67175E00C6E085 /* FoodDetailBGView.swift */,
 				6709E7CD2B4A386700706A1F /* FoodDetailViewModel.swift */,
 			);
 			path = FoodsDetail;
@@ -522,10 +539,13 @@
 				67E4FC822B47A5520031E299 /* FoodDetailViewController.swift in Sources */,
 				672E39752B4FEBA800C6E085 /* FoodListCell.swift in Sources */,
 				67E4FC862B47AB690031E299 /* FoodListFlow.swift in Sources */,
+				672E398D2B677E5200C6E085 /* UIView+.swift in Sources */,
 				6709E7C82B47D91300706A1F /* FoodMoya.swift in Sources */,
 				67E4FC4B2B479B630031E299 /* FoodDictionary.xcdatamodeld in Sources */,
 				672E39732B4FE8C800C6E085 /* FoodListView.swift in Sources */,
+				672E398A2B677B9700C6E085 /* FoodDetailView.swift in Sources */,
 				67E4FC412B479B630031E299 /* AppDelegate.swift in Sources */,
+				672E39862B67175E00C6E085 /* FoodDetailBGView.swift in Sources */,
 				6709E7CC2B4A385B00706A1F /* FoodListViewModel.swift in Sources */,
 				6709E7CA2B47D98300706A1F /* FoodModel.swift in Sources */,
 				6709E7CE2B4A386700706A1F /* FoodDetailViewModel.swift in Sources */,

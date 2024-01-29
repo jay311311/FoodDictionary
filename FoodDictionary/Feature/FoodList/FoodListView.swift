@@ -6,8 +6,8 @@
 //
 
 import UIKit
-import RxRelay
 import RxSwift
+import RxCocoa
 
 class FoodListView: UIView {
     let disposeBag = DisposeBag()
@@ -59,7 +59,7 @@ class FoodListView: UIView {
         
         collectionView.rx.modelSelected(Food.self)
             .subscribe(onNext: { [weak self] observe in
-                self?.actionRelay.accept(.tapFoodList)
+                self?.actionRelay.accept(.tapFoodList(food: observe))
             })
             .disposed(by: disposeBag)
     }

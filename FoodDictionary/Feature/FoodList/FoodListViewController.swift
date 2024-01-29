@@ -27,7 +27,7 @@ class FoodListViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .purple
         bindViewModel()
-        setLayout()
+        setupLayout()
         requestTregger.accept(())
     }
     
@@ -35,7 +35,7 @@ class FoodListViewController: UIViewController {
         print("FoodListViewController purple deinit")
     }
     
-    func setLayout() {
+    func setupLayout() {
         view.addSubview(foodListView)
         view.addSubview(loadingView)
         foodListView.snp.makeConstraints {

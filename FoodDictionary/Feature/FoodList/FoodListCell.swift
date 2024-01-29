@@ -43,14 +43,14 @@ class FoodListCell: UICollectionViewCell {
     }
     
     func setupLayout() {
-        backgroundColor = .yellow
         contentView.addSubview(backgroundImage)
-        backgroundImage.layer.addSublayer(darkGradationView)
         contentView.addSubview(titleLabel)
         
+        backgroundImage.layer.addSublayer(darkGradationView)
         backgroundImage.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+        
         titleLabel.snp.makeConstraints {
             $0.bottom.leading.trailing.equalToSuperview().inset(5)
         }

@@ -55,9 +55,9 @@ class LoadingView: UIView {
     }
     
     func configure() {
-        self.isLoading.bind { bool in
-            self.isHidden = !bool
-            bool ? self.activityIndicatorView.startAnimating() : self.activityIndicatorView.stopAnimating()
+        self.isLoading.bind { [weak self] bool in
+            self?.isHidden = !bool
+            bool ? self?.activityIndicatorView.startAnimating() : self?.activityIndicatorView.stopAnimating()
         }
     }
 }

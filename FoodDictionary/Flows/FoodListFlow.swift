@@ -29,8 +29,8 @@ class FoodListFlow: Flow {
         switch step {
         case .initialStep:
             return navigateToFoodListScreen()
-        case .foodDetail:
-            return navigateToFoodDetail()
+        case .foodDetail(let food):
+            return navigateToFoodDetail(food: food)
         default:
             return .none
         }
@@ -43,9 +43,9 @@ class FoodListFlow: Flow {
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewController.viewModel, allowStepWhenDismissed: true))
     }
     
-    private func navigateToFoodDetail() -> FlowContributors {
+    private func navigateToFoodDetail(food: Food) -> FlowContributors {
         let viewController =  FoodDetailViewController()
-        viewController.viewModel = FoodDetailViewModel()
+        viewController.viewModel = FoodDetailViewModel(foodDetail: food)
         viewController.hidesBottomBarWhenPushed = true
         self.rootViewController.pushViewController(viewController, animated: true)
         return .none

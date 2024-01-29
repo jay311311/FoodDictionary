@@ -11,7 +11,7 @@ import RxCocoa
 import RxFlow
 
 enum FoodListActionType {
-    case tapFoodList
+    case tapFoodList(food: Food)
 }
 
 class FoodListViewModel: Stepper {
@@ -52,9 +52,9 @@ class FoodListViewModel: Stepper {
     private func getData() {
         FoodService.shared
             .getFoodListByMoya()
-            .subscribe(onSuccess: { data in
-                self.foodList.accept(data)
-                self.isLoading.accept(false)
+            .subscribe(onSuccess: { [weak self] data in
+                self?.foodList.accept(data)
+                self?.isLoading.accept(false)
             }).disposed(by: disposeBag)
     }
 }
@@ -62,8 +62,8 @@ class FoodListViewModel: Stepper {
 extension FoodListViewModel {
     private func doAction(_ actionType: FoodListActionType) {
         switch actionType {
-        case .tapFoodList:
-            return  self.steps.accept(FoodListSteps.foodDetail)
+        case .tapFoodList(let food):
+            return  self.steps.accept(FoodListSteps.foodDetail(food: food))
         }
     }
 }
