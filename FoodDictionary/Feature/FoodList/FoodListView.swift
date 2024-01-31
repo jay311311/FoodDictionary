@@ -16,10 +16,10 @@ class FoodListView: UIView {
     
     lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
-        let width = (UIScreen.main.bounds.size.width / 2) - 20
+        let width = (UIScreen.main.bounds.size.width / 2) - 15
         
-        flowLayout.itemSize = CGSize(width: width, height: 200)
-        flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        flowLayout.itemSize = CGSize(width: width, height: width)
+        flowLayout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 0, right: 10)
         
         let collection = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         collection.register(FoodListCell.self, forCellWithReuseIdentifier: FoodListCell.id)

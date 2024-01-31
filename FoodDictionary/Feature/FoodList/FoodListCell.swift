@@ -16,6 +16,8 @@ class FoodListCell: UICollectionViewCell {
         label.numberOfLines = 2
         label.lineBreakMode = .byWordWrapping
         label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+        label.sizeToFit()
         return label
     }()
     lazy var backgroundImage = UIImageView()
@@ -52,7 +54,7 @@ class FoodListCell: UICollectionViewCell {
         }
         
         titleLabel.snp.makeConstraints {
-            $0.bottom.leading.trailing.equalToSuperview().inset(5)
+            $0.bottom.leading.trailing.equalToSuperview().inset(10)
         }
     }
     

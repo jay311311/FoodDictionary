@@ -39,7 +39,7 @@ class FoodListFlow: Flow {
     private func navigateToFoodListScreen() -> FlowContributors {
         let viewController = FoodListViewController()
         viewController.viewModel = self.foodListViewModel
-        rootViewController.pushViewController(viewController, animated: true)
+        rootViewController.pushViewController(viewController, animated: false)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewController.viewModel, allowStepWhenDismissed: true))
     }
     
@@ -47,7 +47,7 @@ class FoodListFlow: Flow {
         let viewController =  FoodDetailViewController()
         viewController.viewModel = FoodDetailViewModel(foodDetail: food)
         viewController.hidesBottomBarWhenPushed = true
-        self.rootViewController.pushViewController(viewController, animated: true)
+        self.rootViewController.pushViewController(viewController, animated: false)
         return .none
     }
 }

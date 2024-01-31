@@ -28,7 +28,7 @@ class FoodDetailRecipeCell: UITableViewCell {
         let imgView = UIImageView()
         imgView.layer.cornerRadius = 5
         imgView.clipsToBounds = true
-        imgView.contentMode = .scaleAspectFit
+        imgView.contentMode = .scaleToFill
         return imgView
     }()
     

@@ -25,7 +25,10 @@ class FoodListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .purple
+        view.backgroundColor = .white
+        
+        navigationController?.navigationBar.topItem?.title = "Recipe"
+        navigationController?.navigationBar.prefersLargeTitles = true
         bindViewModel()
         setupLayout()
         requestTregger.accept(())
