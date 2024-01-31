@@ -12,6 +12,7 @@ import RxCocoa
 class FoodDetailView: UIView {
     let disposeBag = DisposeBag()
     var dataRelay = BehaviorRelay<Food?>(value: nil)
+    var recipeRelay = BehaviorRelay<[Recipe]>(value: [])
     
     lazy var detailView: UIView = {
         let view = UIView()
@@ -41,8 +42,14 @@ class FoodDetailView: UIView {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
         label.textColor = .systemGray
-        
         return label
+    }()
+    
+    lazy var tableView: UITableView = {
+        let table = UITableView()
+        table.separatorStyle = .none
+        table.register(FoodDetailRecipeCell.self, forCellReuseIdentifier: FoodDetailRecipeCell.id)
+        return table
     }()
     
     override init(frame: CGRect) {
@@ -68,7 +75,7 @@ class FoodDetailView: UIView {
         detailView.addSubview(divider)
         detailView.addSubview(foodName)
         detailView.addSubview(foodCategory)
-        
+        detailView.addSubview(tableView)
         
         divider.snp.makeConstraints {
             $0.top.equalTo(detailView.snp.top).offset(15)
@@ -85,12 +92,21 @@ class FoodDetailView: UIView {
             $0.leading.equalTo(foodName.snp.leading)
             $0.top.equalTo(foodName.snp.bottom).inset(-5)
         }
+        tableView.snp.makeConstraints {
+            $0.top.equalTo(foodCategory.snp.bottom)
+            $0.bottom.leading.trailing.equalToSuperview()
+        }
     }
     
     func configure() {
         dataRelay.bind { [weak self] data in
-            self?.foodName.text = data?.RCP_NM ?? ""
-            self?.foodCategory.text = data?.RCP_PAT2 ?? ""
+            self?.foodName.text = data?.RCP_NM
+            self?.foodCategory.text = data?.RCP_PAT2
+            self?.recipeRelay.accept(data?.RCP_STEP ?? [])
+        }
+        
+        recipeRelay.bind(to: tableView.rx.items(cellIdentifier: "FoodDetailRecipeCell", cellType: FoodDetailRecipeCell.self)) { index, data, cell in
+            cell.configure(index: index,data: data)
         }
     }
 }

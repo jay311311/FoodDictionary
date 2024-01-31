@@ -27,7 +27,8 @@ class FoodDetailBGView: UIView {
         let width = UIScreen.main.bounds.size.width
         let colors: [CGColor] = [
             .init(red: 0, green: 0, blue: 0, alpha: 0),
-            .init(red: 0, green: 0, blue: 0, alpha: 0.5),
+            .init(red: 0, green: 0, blue: 0, alpha: 0),
+            .init(red: 0, green: 0, blue: 0, alpha: 0.4),
             .init(red: 0, green: 0, blue: 0, alpha: 1)
         ]
         layer.colors = colors

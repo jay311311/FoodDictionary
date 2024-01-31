@@ -40,31 +40,31 @@ extension FoodService {
     func transformedData(_ data: [OriginFood]) -> [Food] {
         data.map { originData in
             var recipeStep:[Recipe] = []
-            if let manual = originData.MANUAL01, let manualImg = originData.MANUAL_IMG01, manual != "", manualImg != "" {
-                recipeStep.append(Recipe(MANUAL: manual, MANUAL_IMG: manualImg))
+            if let manual = originData.MANUAL01, let manualImg = originData.MANUAL_IMG01, !manual.isEmpty, !manualImg.isEmpty {
+                recipeStep.append(Recipe(MANUAL: manualWithoutIndex(manual), MANUAL_IMG: manualImg))
             }
-            if let manual = originData.MANUAL02, let manualImg = originData.MANUAL_IMG02, manual != "", manualImg != "" {
-                recipeStep.append(Recipe(MANUAL: manual, MANUAL_IMG: manualImg))
+            if let manual = originData.MANUAL02, let manualImg = originData.MANUAL_IMG02,!manual.isEmpty, !manualImg.isEmpty {
+                recipeStep.append(Recipe(MANUAL: manualWithoutIndex(manual), MANUAL_IMG: manualImg))
             }
-            if let manual = originData.MANUAL03, let manualImg = originData.MANUAL_IMG03, manual != "", manualImg != "" {
-                recipeStep.append(Recipe(MANUAL: manual, MANUAL_IMG: manualImg))
+            if let manual = originData.MANUAL03, let manualImg = originData.MANUAL_IMG03, !manual.isEmpty, !manualImg.isEmpty {
+                recipeStep.append(Recipe(MANUAL: manualWithoutIndex(manual), MANUAL_IMG: manualImg))
             }
-            if let manual = originData.MANUAL04, let manualImg = originData.MANUAL_IMG04, manual != "", manualImg != "" {
-                recipeStep.append(Recipe(MANUAL: manual, MANUAL_IMG: manualImg))
+            if let manual = originData.MANUAL04, let manualImg = originData.MANUAL_IMG04, !manual.isEmpty, !manualImg.isEmpty {
+                recipeStep.append(Recipe(MANUAL: manualWithoutIndex(manual), MANUAL_IMG: manualImg))
             }
-            if let manual = originData.MANUAL05, let manualImg = originData.MANUAL_IMG05, manual != "", manualImg != "" {
-                recipeStep.append(Recipe(MANUAL: manual, MANUAL_IMG: manualImg))
+            if let manual = originData.MANUAL05, let manualImg = originData.MANUAL_IMG05, !manual.isEmpty, !manualImg.isEmpty {
+                recipeStep.append(Recipe(MANUAL: manualWithoutIndex(manual), MANUAL_IMG: manualImg))
             }
-            if let manual = originData.MANUAL06, let manualImg = originData.MANUAL_IMG06, manual != "", manualImg != "" {
-                recipeStep.append(Recipe(MANUAL: manual, MANUAL_IMG: manualImg))
+            if let manual = originData.MANUAL06, let manualImg = originData.MANUAL_IMG06, !manual.isEmpty, !manualImg.isEmpty {
+                recipeStep.append(Recipe(MANUAL: manualWithoutIndex(manual), MANUAL_IMG: manualImg))
             }
-            if let manual = originData.MANUAL07, let manualImg = originData.MANUAL_IMG07, manual != "", manualImg != "" {
-                recipeStep.append(Recipe(MANUAL: manual, MANUAL_IMG: manualImg))
+            if let manual = originData.MANUAL07, let manualImg = originData.MANUAL_IMG07, !manual.isEmpty, !manualImg.isEmpty {
+                recipeStep.append(Recipe(MANUAL: manualWithoutIndex(manual), MANUAL_IMG: manualImg))
             }
-            if let manual = originData.MANUAL08, let manualImg = originData.MANUAL_IMG08{
-                recipeStep.append(Recipe(MANUAL: manual, MANUAL_IMG: manualImg))
+            if let manual = originData.MANUAL08, let manualImg = originData.MANUAL_IMG08, !manual.isEmpty, !manualImg.isEmpty{
+                recipeStep.append(Recipe(MANUAL: manualWithoutIndex(manual), MANUAL_IMG: manualImg))
             }
-            if let manual = originData.MANUAL09, let manualImg = originData.MANUAL_IMG09, manual != "", manualImg != "" {
+            if let manual = originData.MANUAL09, let manualImg = originData.MANUAL_IMG09, !manual.isEmpty, !manualImg.isEmpty {
                 recipeStep.append(Recipe(MANUAL: manual, MANUAL_IMG: manualImg))
             }
             
@@ -79,5 +79,12 @@ extension FoodService {
                 RCP_STEP: recipeStep)
             return NewData
         }
+    }
+    
+    func manualWithoutIndex(_ string: String) -> String {
+        guard string != ""  else { return "" }
+        var stringWithoutIndex = string.components(separatedBy: ".")
+        var result = stringWithoutIndex[1].replacingOccurrences(of: "\n", with: " ")
+        return result
     }
 }
