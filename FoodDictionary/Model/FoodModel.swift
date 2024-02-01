@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct FoodModel: Decodable {
     var COOKRCP01: FoodInfos
@@ -18,6 +19,8 @@ struct FoodInfos : Decodable {
 
 struct Food {
     let RCP_NM: String            // 메뉴명(name)
+    let RCP_SEQ: String             // 일련 번호
+    var RCP_SAVE: Bool
     let RCP_PARTS_DTLS: String?    // 재료 정보
     let RCP_PAT2: String?          // 요리 종류
     let INFO_WGT: String?          // 중량(1인분)
@@ -35,6 +38,7 @@ struct Recipe {
 
 struct OriginFood: Decodable {
     let RCP_NM: String            // 메뉴명(name)
+    let RCP_SEQ: String             // 일련 번호
     let RCP_PARTS_DTLS: String?    // 재료 정보
     let RCP_WAY2: String?          // 조리 방법
     let RCP_PAT2: String?          // 요리 종류

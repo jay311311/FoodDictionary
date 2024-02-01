@@ -12,6 +12,7 @@ import RxFlow
 
 enum FoodListActionType {
     case tapFoodList(food: Food)
+    case tapSaveBtn(name: String, isSelected: Bool)
 }
 
 class FoodListViewModel: Stepper {
@@ -20,6 +21,7 @@ class FoodListViewModel: Stepper {
     
     var foodList = BehaviorRelay<[Food]>(value: [])
     var isLoading = BehaviorRelay<Bool>(value: true)
+    var foodData: [Food] = []
     
     struct Input {
         let trigger: PublishRelay<Void>
@@ -34,7 +36,8 @@ class FoodListViewModel: Stepper {
         req.trigger
             .bind(onNext: { [weak self] _ in
                 self?.getData()
-            }).disposed(by: disposeBag)
+            })
+            .disposed(by: disposeBag)
         
         req.actionTrigger
             .subscribe(onNext: {
@@ -54,6 +57,7 @@ class FoodListViewModel: Stepper {
             .getFoodListByMoya()
             .subscribe(onSuccess: { [weak self] data in
                 self?.foodList.accept(data)
+                self?.foodData = data
                 self?.isLoading.accept(false)
             }).disposed(by: disposeBag)
     }
@@ -63,7 +67,21 @@ extension FoodListViewModel {
     private func doAction(_ actionType: FoodListActionType) {
         switch actionType {
         case .tapFoodList(let food):
-            return  self.steps.accept(FoodListSteps.foodDetail(food: food))
+            return tapFoodList(food: food)
+        case .tapSaveBtn(let name, let isSelected):
+            return tapSaveBtn(name: name, isSelected: isSelected)
+        }
+    }
+    
+    func tapFoodList(food: Food) {
+        self.steps.accept(FoodListSteps.foodDetail(food: food))
+    }
+    
+    func tapSaveBtn(name: String, isSelected: Bool) {
+        if let index = self.foodData.firstIndex(where: { $0.RCP_NM == name}) {
+            self.foodData[index].RCP_SAVE = isSelected
+            self.foodList.accept(self.foodData)
+            
         }
     }
 }

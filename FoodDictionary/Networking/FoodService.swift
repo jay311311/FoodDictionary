@@ -68,8 +68,12 @@ extension FoodService {
                 recipeStep.append(Recipe(MANUAL: manual, MANUAL_IMG: manualImg))
             }
             
+            var isSaved = false
+            
             let NewData = Food(
                 RCP_NM: originData.RCP_NM,
+                RCP_SEQ: originData.RCP_SEQ,
+                RCP_SAVE: isSaved,
                 RCP_PARTS_DTLS: originData.RCP_PARTS_DTLS,
                 RCP_PAT2: originData.RCP_PAT2,
                 INFO_WGT: originData.INFO_WGT,

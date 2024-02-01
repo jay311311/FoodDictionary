@@ -40,6 +40,7 @@ class FoodDetailViewController: UIViewController {
         
         backgroundView.setupDI(relay: output.foodDetailRely)
         foodDetailView.setupDI(relay: output.foodDetailRely)
+        foodDetailView.setupDI(relay: actionTrigger)
     }
     
     func setupLayout() {

@@ -11,9 +11,10 @@ import RxCocoa
 
 class FoodDetailView: UIView {
     let disposeBag = DisposeBag()
-    var dataRelay = BehaviorRelay<Food?>(value: nil)
-    var recipeRelay = BehaviorRelay<[Recipe]>(value: [])
-    
+    let dataRelay = BehaviorRelay<Food?>(value: nil)
+    let recipeRelay = BehaviorRelay<[Recipe]>(value: [])
+    let actionRelay = PublishRelay<FoodDetailActionType>()
+
     lazy var detailView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -31,6 +32,14 @@ class FoodDetailView: UIView {
         return view
     }()
     
+    lazy var saveBtn: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "bookmark"), for: .normal)
+        button.setImage(UIImage(systemName: "bookmark.fill"), for: .selected)
+        button.contentVerticalAlignment = .fill
+        button.contentHorizontalAlignment = .fill
+        return button
+    }()
     lazy var foodName: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 25, weight: .bold)
@@ -65,6 +74,9 @@ class FoodDetailView: UIView {
     func setupDI(relay: BehaviorRelay<Food?>) {
         relay.bind(to: self.dataRelay).disposed(by: disposeBag)
     }
+    func setupDI(relay: PublishRelay<FoodDetailActionType>) {
+        actionRelay.bind(to: relay).disposed(by: disposeBag)
+    }
     
     func setupLayout() {
         addSubview(detailView)
@@ -73,6 +85,7 @@ class FoodDetailView: UIView {
         }
         
         detailView.addSubview(divider)
+        detailView.addSubview(saveBtn)
         detailView.addSubview(foodName)
         detailView.addSubview(foodCategory)
         detailView.addSubview(tableView)
@@ -92,6 +105,11 @@ class FoodDetailView: UIView {
             $0.leading.equalTo(foodName.snp.leading)
             $0.top.equalTo(foodName.snp.bottom).inset(-5)
         }
+        saveBtn.snp.makeConstraints {
+            $0.top.equalTo(foodName.snp.top)
+            $0.trailing.equalToSuperview().inset(18)
+            $0.size.equalTo(30)
+        }
         tableView.snp.makeConstraints {
             $0.top.equalTo(foodCategory.snp.bottom)
             $0.bottom.leading.trailing.equalToSuperview()
@@ -100,13 +118,21 @@ class FoodDetailView: UIView {
     
     func configure() {
         dataRelay.bind { [weak self] data in
+            print("여기 확인 용 \(data?.RCP_SAVE)")
             self?.foodName.text = data?.RCP_NM
             self?.foodCategory.text = data?.RCP_PAT2
+            self?.saveBtn.isSelected = data?.RCP_SAVE ?? false
             self?.recipeRelay.accept(data?.RCP_STEP ?? [])
         }
         
         recipeRelay.bind(to: tableView.rx.items(cellIdentifier: "FoodDetailRecipeCell", cellType: FoodDetailRecipeCell.self)) { index, data, cell in
             cell.configure(index: index,data: data)
-        }
+        }.disposed(by: disposeBag)
+        
+        saveBtn.rx.tap.bind { [weak self] _ in
+            guard let self = self else { return }
+            self.saveBtn.isSelected = !(self.saveBtn.isSelected)
+            actionRelay.accept(.tapSaveBtn(id: dataRelay.value?.RCP_SEQ ?? "", isSelected: self.saveBtn.isSelected))
+        }.disposed(by: disposeBag)
     }
 }

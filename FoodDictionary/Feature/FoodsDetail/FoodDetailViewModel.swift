@@ -11,7 +11,7 @@ import RxCocoa
 import RxFlow
 
 enum FoodDetailActionType {
-    case tapSaveBtn
+    case tapSaveBtn(id: String, isSelected: Bool)
 }
 
 class FoodDetailViewModel: Stepper {
@@ -58,6 +58,13 @@ class FoodDetailViewModel: Stepper {
 
 extension FoodDetailViewModel {
     func doAction(_ actionType: FoodDetailActionType) {
-        
+        switch actionType {
+        case .tapSaveBtn(let id, let isSelected):
+            tapSaveBtn(id: id, isSelected: isSelected)
+        }
+    }
+    
+    func tapSaveBtn(id: String, isSelected: Bool){
+        print("저장 버튼 탭 id = \(id) // isSelected = \(isSelected)")
     }
 }

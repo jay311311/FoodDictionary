@@ -53,8 +53,18 @@ class FoodListView: UIView {
     }
     
     func setupTableView() {
-        dataRelay.bind(to:collectionView.rx.items(cellIdentifier:"FoodListCell", cellType: FoodListCell.self)) { index, data, cell in
+        dataRelay.bind(to:collectionView.rx.items(cellIdentifier:"FoodListCell", cellType: FoodListCell.self)) {
+            [weak self] index, data, cell in
+            guard let self = self else { return }
             cell.configure(data: data)
+            
+            cell.saveBtn.rx.tap
+                .bind {[weak self] _ in
+                    guard let self = self else { return }
+                    cell.saveBtn.isSelected = !cell.saveBtn.isSelected
+                    actionRelay.accept(.tapSaveBtn(name: data.RCP_NM, isSelected: cell.saveBtn.isSelected))
+                }.disposed(by: cell.disposeBag)
+
         }.disposed(by: disposeBag)
         
         collectionView.rx.modelSelected(Food.self)
