@@ -42,6 +42,7 @@ class FoodDetailView: UIView {
     }()
     lazy var foodName: UILabel = {
         let label = UILabel()
+        label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 25, weight: .bold)
         label.textColor = .black
         return label
@@ -99,6 +100,7 @@ class FoodDetailView: UIView {
         
         foodName.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(18)
+            $0.trailing.equalTo(saveBtn.snp.leading)
             $0.top.equalTo(divider.snp.bottom).inset(-35)
         }
         foodCategory.snp.makeConstraints {
@@ -118,21 +120,22 @@ class FoodDetailView: UIView {
     
     func configure() {
         dataRelay.bind { [weak self] data in
-            print("여기 확인 용 \(data?.RCP_SAVE)")
-            self?.foodName.text = data?.RCP_NM
-            self?.foodCategory.text = data?.RCP_PAT2
-            self?.saveBtn.isSelected = data?.RCP_SAVE ?? false
-            self?.recipeRelay.accept(data?.RCP_STEP ?? [])
+            guard let data = data else { return }
+            self?.foodName.text = data.RCP_NM
+            self?.foodCategory.text = data.RCP_PAT2
+            self?.saveBtn.isSelected = data.RCP_SAVE ?? false
+            self?.recipeRelay.accept(data.RCP_STEP ?? [])
         }
         
         recipeRelay.bind(to: tableView.rx.items(cellIdentifier: "FoodDetailRecipeCell", cellType: FoodDetailRecipeCell.self)) { index, data, cell in
             cell.configure(index: index,data: data)
+            cell.selectionStyle = .none
         }.disposed(by: disposeBag)
         
         saveBtn.rx.tap.bind { [weak self] _ in
             guard let self = self else { return }
             self.saveBtn.isSelected = !(self.saveBtn.isSelected)
-            actionRelay.accept(.tapSaveBtn(id: dataRelay.value?.RCP_SEQ ?? "", isSelected: self.saveBtn.isSelected))
+            actionRelay.accept(.tapSaveBtn(name: dataRelay.value?.RCP_NM ?? "", isSelected: self.saveBtn.isSelected))
         }.disposed(by: disposeBag)
     }
 }

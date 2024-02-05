@@ -11,6 +11,11 @@ import Kingfisher
 
 class FoodDetailRecipeCell: UITableViewCell {
     static let id = "FoodDetailRecipeCell"
+    let labelWidth: CGFloat = 270
+    let imageSize: CGFloat = 80
+    let margin: CGFloat = 8
+    
+    lazy var containerView = UIView()
     
     lazy var indexLabel: UILabel = {
         let label = UILabel()
@@ -19,16 +24,13 @@ class FoodDetailRecipeCell: UITableViewCell {
     lazy var contentLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.sizeToFit()
-        label.baselineAdjustment = .none
-        label.lineBreakMode = .byWordWrapping
         return label
     }()
     lazy var imgView: UIImageView = {
         let imgView = UIImageView()
         imgView.layer.cornerRadius = 5
         imgView.clipsToBounds = true
-        imgView.contentMode = .scaleToFill
+        imgView.contentMode = .scaleAspectFill
         return imgView
     }()
     
@@ -41,28 +43,32 @@ class FoodDetailRecipeCell: UITableViewCell {
     }
     
     func setupLayout() {
-        contentView.snp.makeConstraints {
-            $0.height.lessThanOrEqualTo(80)
+        contentView.addSubview(containerView)
+        
+        containerView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+            $0.width.equalTo(UIScreen.main.bounds.size.width)
+            $0.height.equalTo(imageSize + margin + margin)
         }
-        contentView.addSubview(indexLabel)
-        contentView.addSubview(contentLabel)
-        contentView.addSubview(imgView)
+        
+        containerView.addSubview(indexLabel)
+        containerView.addSubview(contentLabel)
+        containerView.addSubview(imgView)
         
         indexLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(8)
+            $0.top.equalToSuperview().inset(margin)
             $0.leading.equalToSuperview().inset(10)
         }
         imgView.snp.makeConstraints {
-            $0.top.bottom.equalToSuperview().inset(8)
+            $0.top.equalToSuperview().inset(margin)
             $0.trailing.equalToSuperview().inset(10)
-            $0.size.equalTo(80)
+            $0.size.equalTo(imageSize)
         }
         
         contentLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(8)
+            $0.top.equalToSuperview().inset(margin)
             $0.leading.equalTo(indexLabel.snp.trailing).inset(-5)
-            $0.trailing.equalTo(imgView.snp.leading).inset(-5)
-            $0.width.equalTo(270)
+            $0.width.equalTo(labelWidth)
         }
         
         
@@ -74,6 +80,22 @@ class FoodDetailRecipeCell: UITableViewCell {
         if let imageURL = URL(string: data.MANUAL_IMG ?? "") {
             self.imgView.kf.setImage(with: imageURL)
         }
+        changeDynamicLabelHeight(text: data.MANUAL)
     }
     
+   
+    func changeDynamicLabelHeight(text: String) {
+        let heightOfContentLabel = self.contentLabel.calculateLabelHeight(maxWidth: labelWidth, fontSize: 17)
+        if heightOfContentLabel > imageSize {
+            containerView.snp.updateConstraints {
+                $0.height.equalTo(heightOfContentLabel + margin + margin)
+            }
+            contentLabel.snp.remakeConstraints {
+                $0.top.equalToSuperview().inset(margin)
+                $0.leading.equalTo(indexLabel.snp.trailing).inset(-5)
+                $0.trailing.equalTo(imgView.snp.leading).inset(-5)
+                $0.width.equalTo(labelWidth)
+            }
+        }
+    }
 }

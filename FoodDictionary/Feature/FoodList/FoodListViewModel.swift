@@ -11,20 +11,25 @@ import RxCocoa
 import RxFlow
 
 enum FoodListActionType {
-    case tapFoodList(food: Food)
+    case tapFoodList(name: String)
     case tapSaveBtn(name: String, isSelected: Bool)
 }
 
 class FoodListViewModel: Stepper {
     let steps = PublishRelay<Step>()
     var disposeBag = DisposeBag()
+    let service: FoodService
     
     var foodList = BehaviorRelay<[Food]>(value: [])
     var isLoading = BehaviorRelay<Bool>(value: true)
-    var foodData: [Food] = []
+    
+    init(service: FoodService) {
+        self.service = service
+    }
     
     struct Input {
-        let trigger: PublishRelay<Void>
+        let requestTrigger: PublishRelay<Void>
+        let refreshTrigger: PublishRelay<Void>
         let actionTrigger: Observable<FoodListActionType>
     }
     struct Output {
@@ -33,9 +38,15 @@ class FoodListViewModel: Stepper {
     }
     
     func transform(req: Input) -> Output {
-        req.trigger
+        req.requestTrigger
             .bind(onNext: { [weak self] _ in
                 self?.getData()
+            })
+            .disposed(by: disposeBag)
+        
+        req.refreshTrigger
+            .bind(onNext: { [weak self] _ in
+                self?.refreshData()
             })
             .disposed(by: disposeBag)
         
@@ -53,35 +64,37 @@ class FoodListViewModel: Stepper {
     }
     
     private func getData() {
-        FoodService.shared
-            .getFoodListByMoya()
+        service.getFoodListByMoya()
             .subscribe(onSuccess: { [weak self] data in
                 self?.foodList.accept(data)
-                self?.foodData = data
                 self?.isLoading.accept(false)
             }).disposed(by: disposeBag)
+    }
+
+    private func refreshData() {
+        self.foodList.accept(service.foodData)
     }
 }
 
 extension FoodListViewModel {
     private func doAction(_ actionType: FoodListActionType) {
         switch actionType {
-        case .tapFoodList(let food):
-            return tapFoodList(food: food)
+        case .tapFoodList(let name):
+            return tapFoodList(name: name)
         case .tapSaveBtn(let name, let isSelected):
             return tapSaveBtn(name: name, isSelected: isSelected)
         }
     }
     
-    func tapFoodList(food: Food) {
-        self.steps.accept(FoodListSteps.foodDetail(food: food))
+    func tapFoodList(name: String) {
+        self.steps.accept(FoodListSteps.foodDetail(name: name))
     }
     
     func tapSaveBtn(name: String, isSelected: Bool) {
-        if let index = self.foodData.firstIndex(where: { $0.RCP_NM == name}) {
-            self.foodData[index].RCP_SAVE = isSelected
-            self.foodList.accept(self.foodData)
-            
+        if let index = self.service.foodData.firstIndex(where: { $0.RCP_NM == name}) {
+            self.service.foodData[index].RCP_SAVE = isSelected
+            self.foodList.accept(self.service.foodData)
+//            CoreDataStorage.shared.insert(food: foodData[index])
         }
     }
 }

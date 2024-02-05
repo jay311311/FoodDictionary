@@ -16,6 +16,8 @@ class AppFlow: Flow {
         return self.rootViewController
     }
     
+    let service: FoodService = FoodService()
+    
     let rootViewController: UITabBarController = {
         let tabBar = UITabBarController()
         tabBar.tabBar.backgroundColor = .white
@@ -34,11 +36,11 @@ class AppFlow: Flow {
     }
     
     private func setupTabBar() -> FlowContributors {
-        let foodListViewModel = FoodListViewModel()
-        let favoritesViewModel = FavoritesViewModel()
+        let foodListViewModel = FoodListViewModel(service: service)
+        let favoritesViewModel = FavoritesViewModel(service: service)
         
-        let foodListFlow = FoodListFlow(foodListViewModel: foodListViewModel)
-        let favoritesFlow = FavoritesFlow(favoritesViewModel: favoritesViewModel)
+        let foodListFlow = FoodListFlow(foodListViewModel: foodListViewModel, service: service)
+        let favoritesFlow = FavoritesFlow(favoritesViewModel: favoritesViewModel, service: service)
         
         Flows.use(foodListFlow, favoritesFlow, when: .created) { [weak self] (root1: UINavigationController, root2: UINavigationController) in
             let tabBarItem1 = UITabBarItem(title: "Recipe", image: UIImage(systemName: "fork.knife.circle"), selectedImage: nil)

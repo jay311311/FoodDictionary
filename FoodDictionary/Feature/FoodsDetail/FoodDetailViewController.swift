@@ -29,9 +29,6 @@ class FoodDetailViewController: UIViewController {
         bindViewModel()
         setupLayout()
         requestTregger.accept(())
-        
-        foodDetailView.tableView.rowHeight = UITableView.automaticDimension
-        foodDetailView.tableView.estimatedRowHeight = 21
     }
     
     func bindViewModel() {
@@ -39,6 +36,7 @@ class FoodDetailViewController: UIViewController {
         let output = viewModel.transform(req: input)
         
         backgroundView.setupDI(relay: output.foodDetailRely)
+        
         foodDetailView.setupDI(relay: output.foodDetailRely)
         foodDetailView.setupDI(relay: actionTrigger)
     }

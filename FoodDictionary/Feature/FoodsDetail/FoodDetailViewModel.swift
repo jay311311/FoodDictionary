@@ -11,13 +11,14 @@ import RxCocoa
 import RxFlow
 
 enum FoodDetailActionType {
-    case tapSaveBtn(id: String, isSelected: Bool)
+    case tapSaveBtn(name: String, isSelected: Bool)
 }
 
 class FoodDetailViewModel: Stepper {
     let steps = PublishRelay<Step>()
     var disposeBag = DisposeBag()
-    let foodDetail: Food
+    let foodDetailName: String
+    let service: FoodService
     
     var foodDetailRely = BehaviorRelay<Food?>(value: nil)
     
@@ -29,8 +30,10 @@ class FoodDetailViewModel: Stepper {
         let foodDetailRely: BehaviorRelay<Food?>
     }
     
-    init(foodDetail: Food) {
-        self.foodDetail = foodDetail
+    init(foodDetailName: String,
+         service: FoodService) {
+        self.foodDetailName = foodDetailName
+        self.service = service
     }
     
     func transform(req: Input) -> Output {
@@ -50,7 +53,9 @@ class FoodDetailViewModel: Stepper {
     }
     
     func setDetailData() {
-        self.foodDetailRely.accept(self.foodDetail)
+        if let foodDetail = service.foodData.first(where: { $0.RCP_NM == self.foodDetailName}) {
+            self.foodDetailRely.accept(foodDetail)
+        }
     }
     
 }
@@ -59,12 +64,14 @@ class FoodDetailViewModel: Stepper {
 extension FoodDetailViewModel {
     func doAction(_ actionType: FoodDetailActionType) {
         switch actionType {
-        case .tapSaveBtn(let id, let isSelected):
-            tapSaveBtn(id: id, isSelected: isSelected)
+        case .tapSaveBtn(let name, let isSelected):
+            tapSaveBtn(name: name, isSelected: isSelected)
         }
     }
     
-    func tapSaveBtn(id: String, isSelected: Bool){
-        print("저장 버튼 탭 id = \(id) // isSelected = \(isSelected)")
+    func tapSaveBtn(name: String, isSelected: Bool){
+        if let index = self.service.foodData.firstIndex(where: { $0.RCP_NM == name}) {
+            self.service.foodData[index].RCP_SAVE = isSelected
+        }
     }
 }

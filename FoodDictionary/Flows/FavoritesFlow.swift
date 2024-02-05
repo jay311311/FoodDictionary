@@ -18,10 +18,12 @@ class FavoritesFlow: Flow {
     
     let rootViewController = UINavigationController()
     private let favoritesViewModel: FavoritesViewModel
+    var service: FoodService
     
-    
-    init(favoritesViewModel: FavoritesViewModel) {
+    init(favoritesViewModel: FavoritesViewModel,
+         service: FoodService) {
         self.favoritesViewModel = favoritesViewModel
+        self.service = service
     }
     
     func navigate(to step: Step) -> FlowContributors {

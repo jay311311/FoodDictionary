@@ -12,6 +12,7 @@ import RxCocoa
 
 class FoodService {
     static let shared = FoodService()
+    var foodData: [Food] = []
     
     func getFoodListByMoya() -> Single<[Food]> {
         let request =  Single<[Food]>.create { observer in
@@ -23,6 +24,7 @@ class FoodService {
                 case let .success(response):
                     guard let data = try? response.map(FoodModel.self) else { return }
                     let transformedData = self?.transformedData(data.COOKRCP01.row)
+                    self?.foodData = transformedData ?? []
                     observer(.success(transformedData ?? []))
                 case let .failure(error):
                     print(error.localizedDescription)

@@ -12,4 +12,10 @@ import RxFlow
 
 class FavoritesViewModel: Stepper {
     let steps = PublishRelay<Step>()
+    
+    let service: FoodService
+
+    init(service: FoodService) {
+        self.service = service
+    }
 }

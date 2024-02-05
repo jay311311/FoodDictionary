@@ -14,10 +14,10 @@ enum MainSteps: Step {
 
 enum FoodListSteps: Step {
     case initialStep
-    case foodDetail(food: Food)
+    case foodDetail(name: String)
 }
 
 enum FavoritesSteps: Step {
     case initialStep
-    case foodDetail(food: Food)
+    case foodDetail(name: String)
 }

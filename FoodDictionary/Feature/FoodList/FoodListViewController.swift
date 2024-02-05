@@ -13,7 +13,8 @@ import SnapKit
 class FoodListViewController: UIViewController {
     
     var viewModel: FoodListViewModel!
-    let requestTregger = PublishRelay<Void>()
+    let requestTrigger = PublishRelay<Void>()
+    let refreshTrigger = PublishRelay<Void>()
     let actionTrigger = PublishRelay<FoodListActionType>()
     
     lazy var foodListView = FoodListView()
@@ -31,7 +32,11 @@ class FoodListViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         bindViewModel()
         setupLayout()
-        requestTregger.accept(())
+        requestTrigger.accept(())
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        refreshTrigger.accept(())
     }
     
     deinit {
@@ -50,7 +55,9 @@ class FoodListViewController: UIViewController {
     }
     
     func bindViewModel() {
-        let input = FoodListViewModel.Input(trigger: requestTregger, actionTrigger: actionTrigger.asObservable())
+        let input = FoodListViewModel.Input(requestTrigger: requestTrigger,
+                                            refreshTrigger: refreshTrigger,
+                                            actionTrigger: actionTrigger.asObservable())
         let output = viewModel.transform(req: input)
         
         foodListView.setupDI(relay: output.foodList)

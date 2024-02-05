@@ -69,7 +69,7 @@ class FoodListView: UIView {
         
         collectionView.rx.modelSelected(Food.self)
             .subscribe(onNext: { [weak self] observe in
-                self?.actionRelay.accept(.tapFoodList(food: observe))
+                self?.actionRelay.accept(.tapFoodList(name: observe.RCP_NM))
             })
             .disposed(by: disposeBag)
     }
