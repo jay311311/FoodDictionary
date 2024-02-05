@@ -14,8 +14,7 @@ class FoodListViewController: UIViewController {
     
     var viewModel: FoodListViewModel!
     let requestTrigger = PublishRelay<Void>()
-    let refreshTrigger = PublishRelay<Void>()
-    let actionTrigger = PublishRelay<FoodListActionType>()
+    let actionTrigger = PublishRelay<ListActionType>()
     
     lazy var foodListView = FoodListView()
     lazy var loadingView: LoadingView = {
@@ -35,10 +34,6 @@ class FoodListViewController: UIViewController {
         requestTrigger.accept(())
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        refreshTrigger.accept(())
-    }
-    
     deinit {
         print("FoodListViewController purple deinit")
     }
@@ -56,7 +51,6 @@ class FoodListViewController: UIViewController {
     
     func bindViewModel() {
         let input = FoodListViewModel.Input(requestTrigger: requestTrigger,
-                                            refreshTrigger: refreshTrigger,
                                             actionTrigger: actionTrigger.asObservable())
         let output = viewModel.transform(req: input)
         

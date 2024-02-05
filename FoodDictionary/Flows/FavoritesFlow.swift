@@ -32,14 +32,16 @@ class FavoritesFlow: Flow {
         switch step {
         case .initialStep:
             return navigateToFavoritesScreen()
-        case .foodDetail:
-            return navigateToFoodDetail()
-        default:
-            return .none
+        case .foodDetail(let name):
+            return navigateToFoodDetail(name: name)
         }
     }
     
-    private func navigateToFoodDetail() -> FlowContributors {
+    private func navigateToFoodDetail(name: String) -> FlowContributors {
+        let viewController = FoodDetailViewController()
+        viewController.viewModel = FoodDetailViewModel(foodDetailName: name, service: service)
+        viewController.hidesBottomBarWhenPushed = true
+        self.rootViewController.pushViewController(viewController, animated: false)
         return .none
     }
     

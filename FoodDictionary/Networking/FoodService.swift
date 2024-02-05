@@ -11,30 +11,21 @@ import RxSwift
 import RxCocoa
 
 class FoodService {
-    static let shared = FoodService()
-    var foodData: [Food] = []
+    let newsRelay = BehaviorRelay<[Food]>(value: [])
     
-    func getFoodListByMoya() -> Single<[Food]> {
-        let request =  Single<[Food]>.create { observer in
-            
-            let moyaProvider = MoyaProvider<FoodMoaya>()
-            
-            let task = moyaProvider.request(.food) { [weak self] (result) in
-                switch result {
-                case let .success(response):
-                    guard let data = try? response.map(FoodModel.self) else { return }
-                    let transformedData = self?.transformedData(data.COOKRCP01.row)
-                    self?.foodData = transformedData ?? []
-                    observer(.success(transformedData ?? []))
-                case let .failure(error):
-                    print(error.localizedDescription)
-                    observer(.failure(error))
-                }
-                
+    func getFoodListByMoya() {
+        let moyaProvider = MoyaProvider<FoodMoaya>()
+        
+        moyaProvider.request(.food) {  result in
+            switch result {
+            case let .success(response):
+                guard let data = try? response.map(FoodModel.self) else { return }
+                let transformedData = self.transformedData(data.COOKRCP01.row)
+                self.newsRelay.accept(transformedData )
+            case let .failure(error):
+                print(error.localizedDescription)
             }
-            return Disposables.create { task.cancel() }
-        }.observe(on: MainScheduler.instance)
-        return request
+        }
     }
 }
 
@@ -70,7 +61,8 @@ extension FoodService {
                 recipeStep.append(Recipe(MANUAL: manual, MANUAL_IMG: manualImg))
             }
             
-            var isSaved = false
+            let savedList = CoreDataStorage.shared.getFood()
+            let isSaved = savedList.contains(where: {$0.RCP_NM == originData.RCP_NM}) ? true : false
             
             let NewData = Food(
                 RCP_NM: originData.RCP_NM,

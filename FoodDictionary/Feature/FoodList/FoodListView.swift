@@ -12,7 +12,7 @@ import RxCocoa
 class FoodListView: UIView {
     let disposeBag = DisposeBag()
     let dataRelay = BehaviorRelay<[Food]>(value: [])
-    let actionRelay = PublishRelay<FoodListActionType>()
+    let actionRelay = PublishRelay<ListActionType>()
     
     lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
@@ -43,7 +43,7 @@ class FoodListView: UIView {
         relay.bind(to: self.dataRelay).disposed(by: disposeBag)
     }
     
-    func setupDI(relay: PublishRelay<FoodListActionType>) {
+    func setupDI(relay: PublishRelay<ListActionType>) {
         actionRelay.bind(to: relay).disposed(by: disposeBag)
     }
     
@@ -64,8 +64,9 @@ class FoodListView: UIView {
                     cell.saveBtn.isSelected = !cell.saveBtn.isSelected
                     actionRelay.accept(.tapSaveBtn(name: data.RCP_NM, isSelected: cell.saveBtn.isSelected))
                 }.disposed(by: cell.disposeBag)
-
-        }.disposed(by: disposeBag)
+            
+        }
+        .disposed(by: disposeBag)
         
         collectionView.rx.modelSelected(Food.self)
             .subscribe(onNext: { [weak self] observe in

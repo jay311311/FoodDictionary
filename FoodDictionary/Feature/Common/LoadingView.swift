@@ -59,5 +59,6 @@ class LoadingView: UIView {
             self?.isHidden = !bool
             bool ? self?.activityIndicatorView.startAnimating() : self?.activityIndicatorView.stopAnimating()
         }
+        .disposed(by: disposeBag)
     }
 }

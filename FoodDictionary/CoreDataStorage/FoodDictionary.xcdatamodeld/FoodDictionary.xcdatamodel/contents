@@ -1,8 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22E252" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="23D56" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Food" representedClassName=".FoodEntity" syncable="YES">
+        <attribute name="category" optional="YES" attributeType="String"/>
+        <attribute name="imgL" optional="YES" attributeType="String"/>
         <attribute name="imgS" optional="YES" attributeType="String"/>
+        <attribute name="infoWgt" optional="YES" attributeType="String"/>
         <attribute name="isSave" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="manual1" optional="YES" attributeType="String"/>
+        <attribute name="manual1Img" optional="YES" attributeType="String"/>
+        <attribute name="manual2" optional="YES" attributeType="String"/>
+        <attribute name="manual2Img" optional="YES" attributeType="String"/>
+        <attribute name="manual3" optional="YES" attributeType="String"/>
+        <attribute name="manual3Img" optional="YES" attributeType="String"/>
+        <attribute name="manual4" optional="YES" attributeType="String"/>
+        <attribute name="manual4Img" optional="YES" attributeType="String"/>
+        <attribute name="manual5" optional="YES" attributeType="String"/>
+        <attribute name="manual5Img" optional="YES" attributeType="String"/>
+        <attribute name="manual6" optional="YES" attributeType="String"/>
+        <attribute name="manual6Img" optional="YES" attributeType="String"/>
+        <attribute name="manual7" optional="YES" attributeType="String"/>
+        <attribute name="manual7Img" optional="YES" attributeType="String"/>
+        <attribute name="manual8" optional="YES" attributeType="String"/>
+        <attribute name="manual8Img" optional="YES" attributeType="String"/>
+        <attribute name="manual9" optional="YES" attributeType="String"/>
+        <attribute name="manual9Img" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="partDetail" optional="YES" attributeType="String"/>
+        <attribute name="serialNum" optional="YES" attributeType="String"/>
     </entity>
 </model>

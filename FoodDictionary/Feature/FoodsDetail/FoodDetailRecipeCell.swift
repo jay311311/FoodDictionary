@@ -77,7 +77,7 @@ class FoodDetailRecipeCell: UITableViewCell {
     func configure(index: Int, data: Recipe) {
         contentLabel.text = data.MANUAL
         indexLabel.text = "\(index + 1)"
-        if let imageURL = URL(string: data.MANUAL_IMG ?? "") {
+        if let imageURL = URL(string: data.MANUAL_IMG ) {
             self.imgView.kf.setImage(with: imageURL)
         }
         changeDynamicLabelHeight(text: data.MANUAL)

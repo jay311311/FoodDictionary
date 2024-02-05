@@ -123,19 +123,22 @@ class FoodDetailView: UIView {
             guard let data = data else { return }
             self?.foodName.text = data.RCP_NM
             self?.foodCategory.text = data.RCP_PAT2
-            self?.saveBtn.isSelected = data.RCP_SAVE ?? false
-            self?.recipeRelay.accept(data.RCP_STEP ?? [])
+            self?.saveBtn.isSelected = data.RCP_SAVE 
+            self?.recipeRelay.accept(data.RCP_STEP )
         }
+        .disposed(by: disposeBag)
         
         recipeRelay.bind(to: tableView.rx.items(cellIdentifier: "FoodDetailRecipeCell", cellType: FoodDetailRecipeCell.self)) { index, data, cell in
             cell.configure(index: index,data: data)
             cell.selectionStyle = .none
-        }.disposed(by: disposeBag)
+        }
+        .disposed(by: disposeBag)
         
         saveBtn.rx.tap.bind { [weak self] _ in
             guard let self = self else { return }
             self.saveBtn.isSelected = !(self.saveBtn.isSelected)
             actionRelay.accept(.tapSaveBtn(name: dataRelay.value?.RCP_NM ?? "", isSelected: self.saveBtn.isSelected))
-        }.disposed(by: disposeBag)
+        }
+        .disposed(by: disposeBag)
     }
 }

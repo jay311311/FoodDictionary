@@ -72,6 +72,7 @@ class FoodDetailBGView: UIView {
                 self?.backgroundView.kf.setImage(with: imageURL)
             }
         }
+        .disposed(by: disposeBag)
     }
     
 }

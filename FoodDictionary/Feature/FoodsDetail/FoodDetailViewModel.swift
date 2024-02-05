@@ -19,6 +19,7 @@ class FoodDetailViewModel: Stepper {
     var disposeBag = DisposeBag()
     let foodDetailName: String
     let service: FoodService
+    var foodData: [Food] = []
     
     var foodDetailRely = BehaviorRelay<Food?>(value: nil)
     
@@ -40,7 +41,8 @@ class FoodDetailViewModel: Stepper {
         req.trigger
             .bind(onNext: { [weak self] _ in
                 self?.setDetailData()
-            }).disposed(by: disposeBag)
+            })
+            .disposed(by: disposeBag)
         
         req.actionTrigger
             .subscribe(onNext: {
@@ -53,11 +55,15 @@ class FoodDetailViewModel: Stepper {
     }
     
     func setDetailData() {
-        if let foodDetail = service.foodData.first(where: { $0.RCP_NM == self.foodDetailName}) {
-            self.foodDetailRely.accept(foodDetail)
+        service.newsRelay.bind { [weak self] data in
+            guard !data.isEmpty else { return }
+            self?.foodData = data
+            if let foodDetail = data.first(where: { $0.RCP_NM == self?.foodDetailName}) {
+                self?.foodDetailRely.accept(foodDetail)
+            }
         }
+        .disposed(by: disposeBag)
     }
-    
 }
 
 
@@ -70,8 +76,14 @@ extension FoodDetailViewModel {
     }
     
     func tapSaveBtn(name: String, isSelected: Bool){
-        if let index = self.service.foodData.firstIndex(where: { $0.RCP_NM == name}) {
-            self.service.foodData[index].RCP_SAVE = isSelected
+        if let index = self.foodData.firstIndex(where: { $0.RCP_NM == name}) {
+            self.foodData[index].RCP_SAVE = isSelected
+            service.newsRelay.accept(self.foodData)
+            if isSelected {
+                CoreDataStorage.shared.insertFood(food: foodData[index])
+            } else {
+                CoreDataStorage.shared.deleteFood(name: foodData[index].RCP_NM)
+            }
         }
     }
 }

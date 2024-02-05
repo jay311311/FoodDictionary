@@ -33,8 +33,6 @@ class FoodListFlow: Flow {
             return navigateToFoodListScreen()
         case .foodDetail(let name):
             return navigateToFoodDetail(name: name)
-        default:
-            return .none
         }
     }
     
@@ -46,7 +44,7 @@ class FoodListFlow: Flow {
     }
     
     private func navigateToFoodDetail(name: String) -> FlowContributors {
-        let viewController =  FoodDetailViewController()
+        let viewController = FoodDetailViewController()
         viewController.viewModel = FoodDetailViewModel(foodDetailName: name, service: service)
         viewController.hidesBottomBarWhenPushed = true
         self.rootViewController.pushViewController(viewController, animated: false)

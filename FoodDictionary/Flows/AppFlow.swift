@@ -16,6 +16,8 @@ class AppFlow: Flow {
         return self.rootViewController
     }
     
+    let disposeBag = DisposeBag()
+
     let service: FoodService = FoodService()
     
     let rootViewController: UITabBarController = {
@@ -30,12 +32,12 @@ class AppFlow: Flow {
         switch step {
         case .initialStep:
             return setupTabBar()
-        default:
-            return .none
         }
     }
     
     private func setupTabBar() -> FlowContributors {
+        service.getFoodListByMoya()
+        
         let foodListViewModel = FoodListViewModel(service: service)
         let favoritesViewModel = FavoritesViewModel(service: service)
         
