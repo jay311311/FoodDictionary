@@ -14,16 +14,16 @@ class LoadingView: UIView {
     let isLoading = BehaviorRelay<Bool>(value: true)
     
     lazy var backgroundView: UIView = {
-      let view = UIView()
-      view.backgroundColor = .white
-      view.translatesAutoresizingMaskIntoConstraints = false
-      return view
+        let view = UIView()
+        view.backgroundColor = .white
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
     
     lazy var activityIndicatorView: UIActivityIndicatorView = {
-      let view = UIActivityIndicatorView(style: .large)
-      view.translatesAutoresizingMaskIntoConstraints = false
-      return view
+        let view = UIActivityIndicatorView(style: .large)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
     
     override init(frame: CGRect) {

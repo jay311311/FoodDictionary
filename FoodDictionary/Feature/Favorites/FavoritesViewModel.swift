@@ -17,6 +17,8 @@ class FavoritesViewModel: Stepper {
     var disposeBag = DisposeBag()
     
     var foodList = BehaviorRelay<[Food]>(value: [])
+    var isEmptyView = BehaviorRelay<Bool>(value: true)
+
     
     init(service: FoodService) {
         self.service = service
@@ -28,6 +30,7 @@ class FavoritesViewModel: Stepper {
     }
     struct Output {
         let foodList: BehaviorRelay<[Food]>
+        let isEmptyView: BehaviorRelay<Bool>
     }
     
     func transform(req: Input) -> Output {
@@ -47,22 +50,23 @@ class FavoritesViewModel: Stepper {
             .disposed(by: disposeBag)
         
         return Output(
-            foodList: foodList
+            foodList: foodList, 
+            isEmptyView: isEmptyView
         )
     }
     
     func getData() {
-        
         CoreDataStorage.shared.savedListSubject
             .bind(onNext: { [weak self] data in
+                print("확인좀 \(data.isEmpty)")
                 self?.foodList.accept(data)
+                self?.isEmptyView.accept(data.isEmpty)
             })
             .disposed(by: disposeBag)
     }
     
     func getDataFromCoreData() {
         CoreDataStorage.shared.readFood()
-        
     }
 }
 

@@ -18,8 +18,6 @@ class FavoritesViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .yellow
-        
         navigationController?.navigationBar.topItem?.title = "Saved"
         navigationController?.navigationBar.prefersLargeTitles = true
         bindViewModel()
@@ -28,14 +26,20 @@ class FavoritesViewController: UIViewController {
     }
     
     lazy var foodListView = FoodListView()
-    
+    lazy var emtpyView = EmptyView()
+
     deinit {
         print("FavoritesViewController yellow deinit")
     }
     
     func setupLayout() {
         view.addSubview(foodListView)
+        view.addSubview(emtpyView)
+
         foodListView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        emtpyView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
     }
@@ -47,6 +51,8 @@ class FavoritesViewController: UIViewController {
         
         foodListView.setupDI(relay: output.foodList)
         foodListView.setupDI(relay: actionTrigger)
+        
+        emtpyView.setupDI(relay: output.isEmptyView)
         
     }
 }

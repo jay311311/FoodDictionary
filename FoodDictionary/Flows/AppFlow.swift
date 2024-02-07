@@ -45,12 +45,12 @@ class AppFlow: Flow {
         let favoritesFlow = FavoritesFlow(favoritesViewModel: favoritesViewModel, service: service)
         
         Flows.use(foodListFlow, favoritesFlow, when: .created) { [weak self] (root1: UINavigationController, root2: UINavigationController) in
-            let tabBarItem1 = UITabBarItem(title: "Recipe", image: UIImage(systemName: "fork.knife.circle"), selectedImage: nil)
-            let tabBarItem2 = UITabBarItem(title: "Favorites", image: UIImage(systemName: "heart.circle"), selectedImage: nil)
+            let tabBarItem1 = UITabBarItem(title: "Recipe", image: UIImage(systemName: "fork.knife"), selectedImage: nil)
+            let tabBarItem2 = UITabBarItem(title: "Saved", image: UIImage(systemName: "bookmark.fill"), selectedImage: nil)
             root1.tabBarItem = tabBarItem1
             root1.tabBarItem.title = "Recipe"
             root2.tabBarItem = tabBarItem2
-            root2.tabBarItem.title = "Favorites"
+            root2.tabBarItem.title = "Saved"
             self?.rootViewController.setViewControllers([root1, root2], animated: false)
         }
         return .multiple(flowContributors: [
