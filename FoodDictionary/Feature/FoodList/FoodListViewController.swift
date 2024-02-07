@@ -29,7 +29,6 @@ class FoodListViewController: UIViewController {
         view.backgroundColor = .white
         self.navigationItem.searchController = searchBar
         navigationController?.navigationBar.topItem?.title = "Recipe"
-        navigationController?.navigationBar.prefersLargeTitles = true
         bindViewModel()
         setupLayout()
         requestTrigger.accept(())

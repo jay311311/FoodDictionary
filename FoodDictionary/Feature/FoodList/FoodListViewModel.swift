@@ -22,7 +22,9 @@ class FoodListViewModel: Stepper {
     let service: FoodService
     
     var foodList = BehaviorRelay<[Food]>(value: [])
-    var foodData:[Food] =  []
+    var originsFoodData:[Food] =  []
+    var filteredFoodData:[Food] =  []
+    
     var isLoading = BehaviorRelay<Bool>(value: true)
     
     init(service: FoodService) {
@@ -62,9 +64,21 @@ class FoodListViewModel: Stepper {
     private func getData() {
         service.newsRelay.bind { [weak self] data in
             guard !data.isEmpty else { return }
-            self?.isLoading.accept(false)
-            self?.foodData = data
-            self?.foodList.accept(data)
+            guard let self = self  else { return }
+            self.isLoading.accept(false)
+            self.originsFoodData = data
+            if !self.filteredFoodData.isEmpty {
+                let serviceData = service.newsRelay.value
+                let changedData = serviceData.filter{self.filteredFoodData.contains($0)}
+                for item in changedData {
+                    if let index = filteredFoodData.firstIndex(of: item){
+                        filteredFoodData[index].RCP_SAVE = item.RCP_SAVE
+                    }
+                }
+                self.foodList.accept(self.filteredFoodData)
+            } else {
+                self.foodList.accept(data)
+            }
         }
         .disposed(by: disposeBag)
     }
@@ -87,17 +101,27 @@ extension FoodListViewModel {
     }
     
     func tapSaveBtn(name: String, isSelected: Bool) {
-        if let index = self.foodData.firstIndex(where: { $0.RCP_NM == name}) {
-            self.foodData[index].RCP_SAVE = isSelected
-            self.service.newsRelay.accept(self.foodData)
-            self.foodList.accept(self.foodData)
-            if isSelected {
-                CoreDataStorage.shared.insertFood(food: foodData[index])
-                CoreDataStorage.shared.readFood()
-                
-            } else {
-                CoreDataStorage.shared.deleteFood(name: foodData[index].RCP_NM)
+        let indexForOrigin = originsFoodData.firstIndex(where: { $0.RCP_NM == name})
+        guard let indexForOrigin  = indexForOrigin else {return}
+        
+        if filteredFoodData.isEmpty {
+            self.originsFoodData[indexForOrigin].RCP_SAVE = isSelected
+            self.foodList.accept(self.originsFoodData)
+            self.service.newsRelay.accept(self.originsFoodData)
+        } else {
+            if let index = filteredFoodData.firstIndex(where: { $0.RCP_NM == name}) {
+                self.filteredFoodData[index].RCP_SAVE = isSelected
+                self.foodList.accept(self.filteredFoodData)
+                self.originsFoodData[indexForOrigin] = filteredFoodData[index]
+                self.service.newsRelay.accept(self.originsFoodData)
             }
+        }
+        
+        if isSelected {
+            CoreDataStorage.shared.insertFood(food: originsFoodData[indexForOrigin])
+            CoreDataStorage.shared.readFood()
+        } else {
+            CoreDataStorage.shared.deleteFood(name: originsFoodData[indexForOrigin].RCP_NM)
         }
     }
     
@@ -105,8 +129,10 @@ extension FoodListViewModel {
         if word == "" {
             let originData = service.newsRelay.value
             foodList.accept(originData)
+            filteredFoodData = []
         } else {
-            let filteredData = foodData.filter { $0.RCP_NM.contains(word)}
+            let filteredData = originsFoodData.filter { $0.RCP_NM.contains(word)}
+            filteredFoodData = filteredData
             foodList.accept(filteredData)
         }
     }

@@ -19,7 +19,6 @@ class FavoritesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.topItem?.title = "Saved"
-        navigationController?.navigationBar.prefersLargeTitles = true
         bindViewModel()
         setupLayout()
         requestTrigger.accept(())
@@ -53,6 +52,5 @@ class FavoritesViewController: UIViewController {
         foodListView.setupDI(relay: actionTrigger)
         
         emtpyView.setupDI(relay: output.isEmptyView)
-        
     }
 }

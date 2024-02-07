@@ -18,7 +18,6 @@ class FavoritesViewModel: Stepper {
     
     var foodList = BehaviorRelay<[Food]>(value: [])
     var isEmptyView = BehaviorRelay<Bool>(value: true)
-
     
     init(service: FoodService) {
         self.service = service
@@ -58,7 +57,6 @@ class FavoritesViewModel: Stepper {
     func getData() {
         CoreDataStorage.shared.savedListSubject
             .bind(onNext: { [weak self] data in
-                print("확인좀 \(data.isEmpty)")
                 self?.foodList.accept(data)
                 self?.isEmptyView.accept(data.isEmpty)
             })
@@ -94,7 +92,6 @@ extension FavoritesViewModel {
         if let index = serviceData.firstIndex(where: { $0.RCP_NM == name}){
             serviceData[index].RCP_SAVE = false
             self.service.newsRelay.accept(serviceData)
-            
         }
         
         if !isSelected {

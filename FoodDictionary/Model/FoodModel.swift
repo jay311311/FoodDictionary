@@ -17,7 +17,11 @@ struct FoodInfos : Decodable {
     let row: [OriginFood]
 }
 
-struct Food {
+struct Food: Equatable {
+    static func == (lhs: Food, rhs: Food) -> Bool {
+        return  lhs.RCP_NM == rhs.RCP_NM
+    }
+    
     let RCP_NM: String            // 메뉴명(name)
     let RCP_SEQ: String             // 일련 번호
     var RCP_SAVE: Bool

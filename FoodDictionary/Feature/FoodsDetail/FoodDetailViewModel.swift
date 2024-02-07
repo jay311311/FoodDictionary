@@ -81,6 +81,7 @@ extension FoodDetailViewModel {
             service.newsRelay.accept(self.foodData)
             if isSelected {
                 CoreDataStorage.shared.insertFood(food: foodData[index])
+                CoreDataStorage.shared.readFood()
             } else {
                 CoreDataStorage.shared.deleteFood(name: foodData[index].RCP_NM)
             }
