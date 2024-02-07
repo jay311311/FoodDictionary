@@ -34,7 +34,7 @@ class EmptyView: UIView {
         label.numberOfLines = 0
         label.sizeToFit()
         label.textAlignment = .center
-        label.text = "저장된 요리가 없어요.\n 새로운 요리를 저장해 주세요"
+        label.text = "저장된 요리가 없어요.\n 새로운 요리를 저장해 주세요."
         return label
     }()
 

@@ -16,6 +16,7 @@ class FoodListViewController: UIViewController {
     let requestTrigger = PublishRelay<Void>()
     let actionTrigger = PublishRelay<ListActionType>()
     
+    lazy var searchBar = ListSesrchBarController(searchResultsController: nil)
     lazy var foodListView = FoodListView()
     lazy var loadingView: LoadingView = {
         let loadingView = LoadingView()
@@ -26,7 +27,7 @@ class FoodListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        
+        self.navigationItem.searchController = searchBar
         navigationController?.navigationBar.topItem?.title = "Recipe"
         navigationController?.navigationBar.prefersLargeTitles = true
         bindViewModel()
@@ -58,5 +59,7 @@ class FoodListViewController: UIViewController {
         foodListView.setupDI(relay: actionTrigger)
         
         loadingView.setupDI(relay: output.isLoading)
+        
+        searchBar.setupDI(relay: actionTrigger)
     }
 }

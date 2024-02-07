@@ -26,6 +26,7 @@
 		67C1B8602B711D1600F52616 /* FoodEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C1B85E2B711D1600F52616 /* FoodEntity+CoreDataClass.swift */; };
 		67C1B8612B711D1600F52616 /* FoodEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C1B85F2B711D1600F52616 /* FoodEntity+CoreDataProperties.swift */; };
 		67C1B8632B72190C00F52616 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C1B8622B72190C00F52616 /* EmptyView.swift */; };
+		67C1B8652B73364A00F52616 /* ListSesrchBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C1B8642B73364A00F52616 /* ListSesrchBarController.swift */; };
 		67E4FC412B479B630031E299 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E4FC402B479B630031E299 /* AppDelegate.swift */; };
 		67E4FC452B479B630031E299 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E4FC442B479B630031E299 /* ViewController.swift */; };
 		67E4FC4B2B479B630031E299 /* FoodDictionary.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 67E4FC492B479B630031E299 /* FoodDictionary.xcdatamodeld */; };
@@ -84,6 +85,7 @@
 		67C1B85E2B711D1600F52616 /* FoodEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FoodEntity+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		67C1B85F2B711D1600F52616 /* FoodEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FoodEntity+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		67C1B8622B72190C00F52616 /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
+		67C1B8642B73364A00F52616 /* ListSesrchBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSesrchBarController.swift; sourceTree = "<group>"; };
 		67E4FC3D2B479B630031E299 /* FoodDictionary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodDictionary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67E4FC402B479B630031E299 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		67E4FC442B479B630031E299 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -168,17 +170,8 @@
 				67E4FC762B479FAE0031E299 /* FoodList */,
 				67E4FC752B479F750031E299 /* Favorites */,
 				67E4FC802B47A53B0031E299 /* FoodsDetail */,
-				672E39792B5398FA00C6E085 /* Common */,
 			);
 			path = Feature;
-			sourceTree = "<group>";
-		};
-		672E39792B5398FA00C6E085 /* Common */ = {
-			isa = PBXGroup;
-			children = (
-				672E39772B5398F500C6E085 /* LoadingView.swift */,
-			);
-			path = Common;
 			sourceTree = "<group>";
 		};
 		672E398B2B677E3600C6E085 /* Extension */ = {
@@ -292,6 +285,8 @@
 				672E39722B4FE8C800C6E085 /* FoodListView.swift */,
 				672E39742B4FEBA800C6E085 /* FoodListCell.swift */,
 				6709E7CB2B4A385B00706A1F /* FoodListViewModel.swift */,
+				672E39772B5398F500C6E085 /* LoadingView.swift */,
+				67C1B8642B73364A00F52616 /* ListSesrchBarController.swift */,
 			);
 			path = FoodList;
 			sourceTree = "<group>";
@@ -574,6 +569,7 @@
 				6709E7C82B47D91300706A1F /* FoodMoya.swift in Sources */,
 				67E4FC4B2B479B630031E299 /* FoodDictionary.xcdatamodeld in Sources */,
 				672E39732B4FE8C800C6E085 /* FoodListView.swift in Sources */,
+				67C1B8652B73364A00F52616 /* ListSesrchBarController.swift in Sources */,
 				672E398A2B677B9700C6E085 /* FoodDetailView.swift in Sources */,
 				67E4FC412B479B630031E299 /* AppDelegate.swift in Sources */,
 				672E39862B67175E00C6E085 /* FoodDetailBGView.swift in Sources */,
@@ -759,6 +755,7 @@
 				INFOPLIST_FILE = FoodDictionary/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -788,6 +785,7 @@
 				INFOPLIST_FILE = FoodDictionary/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;

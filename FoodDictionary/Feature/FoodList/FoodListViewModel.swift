@@ -13,6 +13,7 @@ import RxFlow
 enum ListActionType {
     case tapFoodList(name: String)
     case tapSaveBtn(name: String, isSelected: Bool)
+    case changeKeyWorod(word: String)
 }
 
 class FoodListViewModel: Stepper {
@@ -76,6 +77,8 @@ extension FoodListViewModel {
             return tapFoodList(name: name)
         case .tapSaveBtn(let name, let isSelected):
             return tapSaveBtn(name: name, isSelected: isSelected)
+        case .changeKeyWorod(let word):
+            return changeKeyWorod(word: word)
         }
     }
     
@@ -95,6 +98,16 @@ extension FoodListViewModel {
             } else {
                 CoreDataStorage.shared.deleteFood(name: foodData[index].RCP_NM)
             }
+        }
+    }
+    
+    func changeKeyWorod(word: String) {
+        if word == "" {
+            let originData = service.newsRelay.value
+            foodList.accept(originData)
+        } else {
+            let filteredData = foodData.filter { $0.RCP_NM.contains(word)}
+            foodList.accept(filteredData)
         }
     }
 }

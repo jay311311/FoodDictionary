@@ -77,6 +77,7 @@ extension FavoritesViewModel {
             return tapFoodList(name: name)
         case .tapSaveBtn(let name, let isSelected):
             return tapSaveBtn(name: name, isSelected: isSelected)
+        default: return 
         }
     }
     
