@@ -14,8 +14,9 @@ class FoodDetailView: UIView {
     let dataRelay = BehaviorRelay<Food?>(value: nil)
     let recipeRelay = BehaviorRelay<[Recipe]>(value: [])
     let actionRelay = PublishRelay<FoodDetailActionType>()
-
-    lazy var detailView: UIView = {
+    
+    lazy var backgroundView = UIView()
+    lazy var bottomSheet: UIView = {
         let view = UIView()
         view.backgroundColor = .white
         view.clipsToBounds = true
@@ -66,6 +67,7 @@ class FoodDetailView: UIView {
         super.init(frame: frame)
         setupLayout()
         configure()
+        setupAddGesture()
     }
     
     required init?(coder: NSCoder) {
@@ -80,19 +82,25 @@ class FoodDetailView: UIView {
     }
     
     func setupLayout() {
-        addSubview(detailView)
-        detailView.snp.makeConstraints {
+        addSubview(backgroundView)
+        
+        backgroundView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+        backgroundView.addSubview(bottomSheet)
+        bottomSheet.addSubview(divider)
+        bottomSheet.addSubview(saveBtn)
+        bottomSheet.addSubview(foodName)
+        bottomSheet.addSubview(foodCategory)
+        bottomSheet.addSubview(tableView)
         
-        detailView.addSubview(divider)
-        detailView.addSubview(saveBtn)
-        detailView.addSubview(foodName)
-        detailView.addSubview(foodCategory)
-        detailView.addSubview(tableView)
+        bottomSheet.snp.makeConstraints {
+            $0.bottom.leading.trailing.equalToSuperview()
+            $0.top.equalToSuperview().offset(345)
+        }
         
         divider.snp.makeConstraints {
-            $0.top.equalTo(detailView.snp.top).offset(15)
+            $0.top.equalTo(bottomSheet.snp.top).offset(15)
             $0.centerX.equalToSuperview()
             $0.width.equalTo(70)
             $0.height.equalTo(5)
@@ -140,5 +148,46 @@ class FoodDetailView: UIView {
             actionRelay.accept(.tapSaveBtn(name: dataRelay.value?.RCP_NM ?? "", isSelected: self.saveBtn.isSelected))
         }
         .disposed(by: disposeBag)
+    }
+    
+    func setupAddGesture(){
+        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(didPanView))
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapView))
+
+        bottomSheet.addGestureRecognizer(panGestureRecognizer)
+        backgroundView.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    @objc func didPanView(_ sender: UIPanGestureRecognizer) {
+        let velocity = sender.velocity(in: self.bottomSheet)
+
+        if velocity.y < 0 {
+                UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: { [weak self]  in
+                    // 위로 올리기
+                    self?.bottomSheet.snp.updateConstraints {
+                        $0.top.equalToSuperview().offset(145)
+                    }
+                    self?.bottomSheet.superview?.layoutIfNeeded()
+                })
+           } else if velocity.y > 0 {
+               UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: { [weak self]  in
+                   // 아래로 내리기
+                   self?.bottomSheet.snp.updateConstraints {
+                       $0.top.equalToSuperview().offset(345)
+                   }
+                   self?.bottomSheet.superview?.layoutIfNeeded()
+               })
+           }
+    }
+    
+    @objc func didTapView(_ sender: UIPanGestureRecognizer) {
+        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: { [weak self]  in
+            // 아래로 내리기
+            self?.bottomSheet.snp.updateConstraints {
+                $0.top.equalToSuperview().offset(345)
+            }
+            self?.bottomSheet.superview?.layoutIfNeeded()
+        })
     }
 }

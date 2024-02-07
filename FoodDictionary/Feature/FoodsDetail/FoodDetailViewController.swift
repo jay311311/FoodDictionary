@@ -26,6 +26,8 @@ class FoodDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        
+        navigationController?.navigationBar.prefersLargeTitles = false 
         bindViewModel()
         setupLayout()
         requestTregger.accept(())
@@ -51,8 +53,7 @@ class FoodDetailViewController: UIViewController {
         }
         
         foodDetailView.snp.makeConstraints {
-            $0.bottom.leading.trailing.equalToSuperview()
-            $0.top.equalTo(backgroundView.snp.bottom).offset(-30)
+            $0.edges.equalToSuperview()
         }
     }
     
