@@ -10,6 +10,13 @@ it's a recipe search App
 - Moya
 - CoreData
 
+
+# Function
+- Search Recipe
+- Bookmark Recipe
+- Networking Recipe API
+
+
 # Screen
 <p>
     <img width="200" src="https://github.com/jay311311/FoodDictionary/assets/65765490/fbc1089d-b8f1-4263-a9f6-a271027bea5d"/>
