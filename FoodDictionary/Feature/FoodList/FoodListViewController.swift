@@ -29,6 +29,7 @@ class FoodListViewController: UIViewController {
         view.backgroundColor = .white
         self.navigationItem.searchController = searchBar
         navigationController?.navigationBar.topItem?.title = "Recipe"
+        self.navigationItem.hidesSearchBarWhenScrolling = false
         bindViewModel()
         setupLayout()
         requestTrigger.accept(())

@@ -11,7 +11,7 @@ import Kingfisher
 
 class FoodDetailRecipeCell: UITableViewCell {
     static let id = "FoodDetailRecipeCell"
-    let labelWidth: CGFloat = 270
+    let labelWidth: CGFloat = 250
     let imageSize: CGFloat = 80
     let margin: CGFloat = 8
     
@@ -19,6 +19,8 @@ class FoodDetailRecipeCell: UITableViewCell {
     
     lazy var indexLabel: UILabel = {
         let label = UILabel()
+        label.lineBreakMode = .byWordWrapping
+        label.sizeToFit()
         return label
     }()
     lazy var contentLabel: UILabel = {
@@ -47,8 +49,7 @@ class FoodDetailRecipeCell: UITableViewCell {
         
         containerView.snp.makeConstraints {
             $0.edges.equalToSuperview()
-            $0.width.equalTo(UIScreen.main.bounds.size.width)
-            $0.height.equalTo(imageSize + margin + margin)
+//            $0.height.equalTo(imageSize)
         }
         
         containerView.addSubview(indexLabel)
@@ -60,7 +61,7 @@ class FoodDetailRecipeCell: UITableViewCell {
             $0.leading.equalToSuperview().inset(10)
         }
         imgView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(margin)
+            $0.top.bottom.equalToSuperview().inset(margin)
             $0.trailing.equalToSuperview().inset(10)
             $0.size.equalTo(imageSize)
         }
@@ -70,8 +71,6 @@ class FoodDetailRecipeCell: UITableViewCell {
             $0.leading.equalTo(indexLabel.snp.trailing).inset(-5)
             $0.width.equalTo(labelWidth)
         }
-        
-        
     }
     
     func configure(index: Int, data: Recipe) {
@@ -86,14 +85,17 @@ class FoodDetailRecipeCell: UITableViewCell {
    
     func changeDynamicLabelHeight(text: String) {
         let heightOfContentLabel = self.contentLabel.calculateLabelHeight(maxWidth: labelWidth, fontSize: 17)
+
         if heightOfContentLabel > imageSize {
-            containerView.snp.updateConstraints {
-                $0.height.equalTo(heightOfContentLabel + margin + margin)
-            }
-            contentLabel.snp.remakeConstraints {
+            imgView.snp.remakeConstraints {
                 $0.top.equalToSuperview().inset(margin)
+                $0.trailing.equalToSuperview().inset(10)
+                $0.size.equalTo(imageSize)
+            }
+            
+            contentLabel.snp.remakeConstraints {
+                $0.top.bottom.equalToSuperview().inset(margin)
                 $0.leading.equalTo(indexLabel.snp.trailing).inset(-5)
-                $0.trailing.equalTo(imgView.snp.leading).inset(-5)
                 $0.width.equalTo(labelWidth)
             }
         }

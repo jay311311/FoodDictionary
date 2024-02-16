@@ -10,17 +10,29 @@ import UIKit
 
 
 extension UILabel {
-    func countLines(of label: UILabel, maxHeight: CGFloat) -> Int {
-            guard let labelText = label.text else {
-                return 0
-            }
-            
-            let rect = CGSize(width: label.bounds.width, height: maxHeight)
-            let labelSize = labelText.boundingRect(with: rect, options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: label.font!], context: nil)
-            
-            let lines = Int(ceil(CGFloat(labelSize.height) / label.font.lineHeight))
-            return labelText.contains("\n") && lines == 1 ? lines + 1 : lines
-       }
+    func countLines(maxWidth: CGFloat) -> Int {
+        guard let text = self.text as NSString? else { return 0 }
+        guard let font = self.font else { return 0 }
+        
+        var attributes = [NSAttributedString.Key: Any]()
+        
+        if let kernAttribute = self.attributedText?.attributes(at: 0, effectiveRange: nil).first(where: { key, _ in
+            return key == .kern
+        }) {
+            attributes[.kern] = kernAttribute.value
+        }
+        attributes[.font] = font
+        
+        let labelTextSize = text.boundingRect(
+            with: CGSize(width: maxWidth, height: .greatestFiniteMagnitude),
+            options: .usesLineFragmentOrigin,
+            attributes: attributes,
+            context: nil
+        )
+        
+        return Int(ceil(labelTextSize.height / font.lineHeight))
+    }
+ 
     
     func calculateLabelHeight(maxWidth: CGFloat, fontSize: CGFloat) -> CGFloat {
         let attributedString = NSAttributedString(string: self.text ?? "", attributes: [.font: UIFont.systemFont(ofSize: self.font.pointSize)])
@@ -29,6 +41,5 @@ extension UILabel {
         return ceil(sizeOfContentLabel.height)
     }
     
-
     
 }

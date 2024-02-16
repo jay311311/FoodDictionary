@@ -18,11 +18,9 @@ class ListSesrchBarController: UISearchController {
         bindAction()
     }
     
-    
     func bindAction() {
-        searchBar.autocorrectionType = .no
         searchBar.rx.text.orEmpty
-            .debounce(RxTimeInterval.seconds(1), scheduler: MainScheduler.instance)
+            .debounce(RxTimeInterval.milliseconds(5), scheduler: MainScheduler.instance)
             .distinctUntilChanged()
             .subscribe { [weak self] value in
                 self?.actionRelay.accept(.changeKeyWorod(word: value))
